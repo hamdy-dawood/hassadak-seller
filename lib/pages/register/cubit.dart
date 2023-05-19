@@ -63,6 +63,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
         } else if (e.type == DioErrorType.badResponse) {
           errorMsg = 'Invalid status code: ${e.response?.data}';
           emit(RegisterFailureState(msg: errorMsg));
+          print(errorMsg);
         } else {
           errorMsg = 'An unexpected error : ${e.error}';
           emit(RegisterFailureState(msg: errorMsg));

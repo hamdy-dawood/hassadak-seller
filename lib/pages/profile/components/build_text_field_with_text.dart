@@ -13,8 +13,7 @@ class TextFieldWithText extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.isLastInput = false,
     required this.validator,
-    this.height = 50,
-    this.expands = false,
+    this.expands = false, this.controller,
   }) : super(key: key);
 
   final String title, hint;
@@ -22,7 +21,7 @@ class TextFieldWithText extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool isLastInput, expands;
   final FormFieldValidator validator;
-  final double height;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -40,51 +39,49 @@ class TextFieldWithText extends StatelessWidget {
           SizedBox(
             height: 8.h,
           ),
-          SizedBox(
-            height: height.h,
-            child: TextFormField(
-              autovalidateMode: autoValidate,
-              textInputAction:
-                  isLastInput ? TextInputAction.done : TextInputAction.next,
-              validator: validator,
-              keyboardType: keyboardType,
-              maxLines: expands ? null : 1,
-              expands: expands,
-              decoration: InputDecoration(
-                hintText: hint,
-                hintStyle: GoogleFonts.almarai(
-                  textStyle: TextStyle(
-                    color: ColorManager.grey,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.normal,
-                  ),
+          TextFormField(
+            controller: controller,
+            autovalidateMode: autoValidate,
+            textInputAction:
+                isLastInput ? TextInputAction.done : TextInputAction.next,
+            validator: validator,
+            keyboardType: keyboardType,
+            maxLines: expands ? null : 1,
+            expands: expands,
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: GoogleFonts.almarai(
+                textStyle: TextStyle(
+                  color: ColorManager.grey,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.normal,
                 ),
-                filled: true,
-                fillColor: ColorManager.lightGrey,
-                border: InputBorder.none,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                  ),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: ColorManager.lightGrey,
-                  ),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: ColorManager.red,
-                    ),
-                    borderRadius: BorderRadius.circular(12.r)),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: ColorManager.red,
-                    ),
-                    borderRadius: BorderRadius.circular(12.r)),
               ),
+              filled: true,
+              fillColor: ColorManager.lightGrey,
+              border: InputBorder.none,
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.transparent,
+                ),
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: ColorManager.lightGrey,
+                ),
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: ColorManager.red,
+                  ),
+                  borderRadius: BorderRadius.circular(12.r)),
+              focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: ColorManager.red,
+                  ),
+                  borderRadius: BorderRadius.circular(12.r)),
             ),
           ),
         ],

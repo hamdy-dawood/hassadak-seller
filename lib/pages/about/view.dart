@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hassadak_seller/components/back_with_title.dart';
 import 'package:hassadak_seller/components/custom_elevated.dart';
+import 'package:hassadak_seller/components/custom_text_field_expands.dart';
 import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
@@ -120,40 +120,18 @@ class AboutView extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              SizedBox(
-                height: 100.h,
-                width: 1.sw,
-                child: TextField(
-                  controller: textController,
-                  maxLines: null,
-                  expands: true,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: ColorManager.lightGrey,
-                    hintText: "اضافة شكوي او اقتراح",
-                    hintStyle: GoogleFonts.almarai(
-                      textStyle: TextStyle(
-                        color: ColorManager.grey,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorManager.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(12.r)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorManager.mainColor,
-                        ),
-                        borderRadius: BorderRadius.circular(12.r)),
-                  ),
-                ),
+              TextFieldWithExpands(
+                controller: textController,
+                title: "",
+                hint: "اضافة شكوي او اقتراح",
+                expands: true,
+                height: 100,
+                validator: (value) {
+                  return null;
+                },
               ),
               SizedBox(
-                height: 20.h,
+                height: 10.h,
               ),
               CustomElevated(
                 text: "ارسال",
