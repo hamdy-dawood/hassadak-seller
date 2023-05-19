@@ -1,0 +1,102 @@
+import 'package:hassadak_seller/constants/strings.dart';
+
+class PersonalDataResp {
+  PersonalDataResp({
+    this.status,
+    this.data,
+  });
+
+  String? status;
+  Data? data;
+
+  PersonalDataResp.fromJson(Map<String, dynamic>? json) {
+    if (json != null) {
+      status = json['status'] ?? "";
+      data = Data.fromJson(json['data'] ?? Map<String, dynamic>);
+    }
+  }
+}
+
+class Data {
+  Data({
+    this.doc,
+  });
+
+  Doc? doc;
+
+  Data.fromJson(Map<String, dynamic>? json) {
+    if (json != null) {
+      doc = Doc.fromJson(json['doc'] ?? Map<String, dynamic>);
+    }
+  }
+}
+
+class Doc {
+  Doc({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.username,
+    this.telephone,
+    this.role,
+    this.image,
+    this.favouriteProduct,
+    this.favouriteCompany,
+    this.createdAt,
+    this.updatedAt,
+    this.V,
+    this.passwordChangedAt,
+    this.whatsapp,
+    this.facebookUrl,
+    this.instaUrl,
+    this.twitterUrl,
+    this.description,
+  });
+
+  String? id;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? username;
+  String? telephone;
+  String? role;
+  String? image;
+  List<dynamic>? favouriteProduct;
+  List<dynamic>? favouriteCompany;
+  String? createdAt;
+  String? updatedAt;
+  int? V;
+  String? passwordChangedAt;
+  String? whatsapp;
+  String? facebookUrl;
+  String? instaUrl;
+  String? twitterUrl;
+  String? description;
+
+  Doc.fromJson(Map<String, dynamic>? json) {
+    if (json != null) {
+      id = json['_id'] ?? "";
+      firstName = json['firstName'] ?? "";
+      lastName = json['lastName'] ?? "";
+      email = json['email'] ?? "";
+      username = json['username'] ?? "";
+      telephone = json['telephone'] ?? "";
+      role = json['role'] ?? "";
+      image = json['image'] ?? UrlsStrings.userImageUrl;
+      favouriteProduct =
+          List.castFrom<dynamic, String>(json['favouriteProduct'] ?? []);
+      favouriteCompany =
+          List.castFrom<dynamic, dynamic>(json['favouriteCompany'] ?? []);
+      createdAt = json['createdAt'] ?? "";
+      updatedAt = json['updatedAt'] ?? "";
+      V = json['__v'] ?? 0;
+      passwordChangedAt = json['passwordChangedAt'] ?? "";
+      whatsapp = json['whatsapp'] ?? "***********";
+      facebookUrl = json['facebookUrl'] ?? "www.ex.com";
+      instaUrl = json['instaUrl']?? "www.ex.com";
+      twitterUrl = json['twitterUrl']?? "www.ex.com";
+      description = json['description']?? "www.ex.com";
+    }
+  }
+}
