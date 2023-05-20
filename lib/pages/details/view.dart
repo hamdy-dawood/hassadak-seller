@@ -6,9 +6,9 @@ import 'package:hassadak_seller/components/custom_elevated.dart';
 import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
-
+import 'package:hassadak_seller/core/snack_and_navigate.dart';
+import 'package:hassadak_seller/pages/edit_product/view.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DetailsView extends StatefulWidget {
   const DetailsView({
@@ -24,7 +24,6 @@ class DetailsView extends StatefulWidget {
     required this.userImage,
     required this.userName,
     required this.phone,
-    required this.favStatus,
   }) : super(key: key);
 
   final String id,
@@ -37,24 +36,12 @@ class DetailsView extends StatefulWidget {
       userName,
       phone;
   final num ratingsAverage, ratingsQuantity;
-  final bool favStatus;
 
   @override
   State<DetailsView> createState() => _DetailsViewState();
 }
 
 class _DetailsViewState extends State<DetailsView> {
-  bool myBool = false;
-
-  Future<void> _launchInBrowser(Uri url) async {
-    if (!await launchUrl(
-      url,
-      mode: LaunchMode.externalApplication,
-    )) {
-      throw Exception('Could not launch $url');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
@@ -152,16 +139,7 @@ class _DetailsViewState extends State<DetailsView> {
                       height: 15.h,
                     ),
                     InkWell(
-                      onTap: () {
-                        // navigateTo(
-                        //   page: ReviewsView(
-                        //     rating: widget.ratingsAverage,
-                        //     id: widget.id,
-                        //     name: widget.productName,
-                        //     image: widget.image,
-                        //   ),
-                        // );
-                      },
+                      onTap: () {},
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
@@ -242,10 +220,17 @@ class _DetailsViewState extends State<DetailsView> {
                       children: [
                         Expanded(
                           child: CustomElevated(
-                            text: "الذهاب إلى الشراء",
+                            text: "تعديل المنتج",
                             press: () {
-                              _launchInBrowser(Uri.parse(
-                                  "https://api.whatsapp.com/send/?phone=%2B2${widget.phone}"));
+                              navigateTo(
+                                  page: EditProductView(
+                                id: widget.id,
+                                image: widget.image,
+                                productName: widget.productName,
+                                price:widget.price,
+                                discountPerc: "50",
+                                description: widget.desc,
+                              ));
                             },
                             hSize: 50.h,
                             btnColor: ColorManager.secMainColor,
@@ -258,23 +243,13 @@ class _DetailsViewState extends State<DetailsView> {
                         ),
                         Expanded(
                           child: CustomElevated(
-                            text: myBool == widget.favStatus
-                                ? "أضف إلى المفضلة"
-                                : "مضاف للمفضلة",
+                            text: "حذف المنتج",
                             hSize: 50.h,
                             btnColor: ColorManager.backGreyWhite,
                             borderRadius: 12.r,
                             fontSize: 16.sp,
-                            textColor: myBool == widget.favStatus
-                                ? Colors.black
-                                : ColorManager.green,
-                            press: () {
-                              if (myBool == widget.favStatus) {
-                              // addFavCubit.addFav(id: widget.id);
-                                myBool = true;
-                                setState(() {});
-                              }
-                            },
+                            textColor: Colors.black,
+                            press: () {},
                           ),
                         ),
                       ],

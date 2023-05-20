@@ -16,12 +16,15 @@ class AllProductsCubit extends Cubit<AllProductsStates> {
   final dio = Dio();
   AllProductsResponse? allProducts;
 
-  Future<void> getAllProducts({String? id = ""}) async {
+  Future<void> getAllProducts({required String id}) async {
     emit(AllProductsLoadingState());
     try {
       dio.options.headers['Authorization'] = 'Bearer ${CacheHelper.getToken()}';
 
-      final response = await dio.get("${UrlsStrings.allProductsUrl}$id");
+      final response =
+          await dio.get(UrlsStrings.allProductsUrl, queryParameters: {
+        "uploaderId": id,
+      });
       if (response.data["status"] == "success" && response.statusCode == 200) {
         allProducts = AllProductsResponse.fromJson(response.data);
         emit(AllProductsSuccessState());
@@ -41,7 +44,7 @@ class AllProductsCubit extends Cubit<AllProductsStates> {
         errorMsg = 'Received invalid status code: ${e.response?.statusCode}';
         emit(NetworkErrorState());
       } else {
-        errorMsg = 'An unexpected error occurred: ${e.error}';
+        errorMsg = 'An unexpected error occurred: ${e.message}';
         emit(NetworkErrorState());
       }
     } catch (e) {

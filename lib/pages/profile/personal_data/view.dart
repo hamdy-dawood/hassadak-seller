@@ -6,12 +6,15 @@ import 'package:hassadak_seller/components/error_network.dart';
 import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
+import 'package:hassadak_seller/core/cache_helper.dart';
+import 'package:hassadak_seller/core/snack_and_navigate.dart';
 import 'package:hassadak_seller/pages/profile/components/build_text_field_with_text.dart';
+import 'package:hassadak_seller/pages/profile/edit_data/view.dart';
+import 'package:hassadak_seller/pages/profile/personal_data/states.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'cubit.dart';
-import 'states.dart';
 
 class PersonalDataView extends StatelessWidget {
   const PersonalDataView({Key? key}) : super(key: key);
@@ -38,7 +41,9 @@ class PersonalDataView extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                navigateTo(page: const EditDataView());
+              },
               icon: SvgIcon(
                 icon: "assets/icons/edit.svg",
                 height: 20.h,
@@ -148,7 +153,7 @@ class PersonalDataView extends StatelessWidget {
                                   "${cubit.profileResponse!.data!.doc!.image}",
                               placeholder: (context, url) =>
                                   JumpingDotsProgressIndicator(
-                                fontSize: 50.h,
+                                fontSize: 20.h,
                                 color: ColorManager.secMainColor,
                               ),
                               errorWidget: (context, url, error) => Center(
@@ -171,63 +176,27 @@ class PersonalDataView extends StatelessWidget {
                       TextFieldWithText(
                         title: "الاسم الاول",
                         hint: "${cubit.profileResponse!.data!.doc!.firstName}",
-                        validator: (value) {
-                          return null;
-                        },
+                        titleColor: ColorManager.grey,
                       ),
                       TextFieldWithText(
                         title: "الاسم الاخير",
                         hint: "${cubit.profileResponse!.data!.doc!.lastName}",
-                        validator: (value) {
-                          return null;
-                        },
+                        titleColor: ColorManager.grey,
                       ),
                       TextFieldWithText(
                         title: "اسم المستخدم",
                         hint: "${cubit.profileResponse!.data!.doc!.username}",
-                        validator: (value) {
-                          return null;
-                        },
+                        titleColor: ColorManager.grey,
                       ),
                       TextFieldWithText(
                         title: "رقم الهاتف",
                         hint: "${cubit.profileResponse!.data!.doc!.telephone}",
-                        validator: (value) {
-                          return null;
-                        },
+                        titleColor: ColorManager.grey,
                       ),
                       TextFieldWithText(
                         title: "البريد الالكترونى",
                         hint: "${cubit.profileResponse!.data!.doc!.email}",
-                        validator: (value) {
-                          return null;
-                        },
-                      ),
-                      TextFieldWithText(
-                        title: "رقم الواتساب",
-                        hint: "${cubit.profileResponse!.data!.doc!.whatsapp}",
-                        validator: (value) {
-                          return null;
-                        },
-                      ),TextFieldWithText(
-                        title: "رابط الفيسبوك",
-                        hint: "${cubit.profileResponse!.data!.doc!.facebookUrl}",
-                        validator: (value) {
-                          return null;
-                        },
-                      ),TextFieldWithText(
-                        title: "رابط الانستجرام",
-                        hint: "${cubit.profileResponse!.data!.doc!.instaUrl}",
-                        validator: (value) {
-                          return null;
-                        },
-                      ),
-                      TextFieldWithText(
-                        title: "رابط تويتر",
-                        hint: "${cubit.profileResponse!.data!.doc!.twitterUrl}",
-                        validator: (value) {
-                          return null;
-                        },
+                        titleColor: ColorManager.grey,
                       ),
                     ],
                   );

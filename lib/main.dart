@@ -7,6 +7,7 @@ import 'core/cache_helper.dart';
 import 'core/snack_and_navigate.dart';
 import 'pages/my_products/all_products/cubit.dart';
 import 'pages/my_products/categories/cubit.dart';
+import 'pages/profile/edit_data/cubit.dart';
 import 'pages/profile/personal_data/cubit.dart';
 import 'pages/splash/view.dart';
 
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => AllCategoriesCubit()),
             BlocProvider(create: (context) => AllProductsCubit()),
             BlocProvider(create: (context) => PersonalDataCubit()),
+            BlocProvider(create: (context) => EditDataCubit()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

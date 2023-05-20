@@ -72,8 +72,6 @@ class BuildProductsBuilder extends StatelessWidget {
                           .toInt(),
                       ratingsQuantity: (allProductsCubit
                           .allProducts!.data!.doc![index].ratingsQuantity!),
-                      favStatus: allProductsCubit
-                          .allProducts!.data!.doc![index].status!,
                     ),
                   );
                 },

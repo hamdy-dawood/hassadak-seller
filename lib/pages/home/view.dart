@@ -14,11 +14,10 @@ import 'package:hassadak_seller/constants/custom_text.dart';
 import 'package:hassadak_seller/constants/input_validator.dart';
 import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
+import 'package:hassadak_seller/pages/add_product/cubit.dart';
+import 'package:hassadak_seller/pages/add_product/states.dart';
 import 'package:hassadak_seller/pages/profile/components/build_text_field_with_text.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-
-import 'add_product/cubit.dart';
-import 'add_product/states.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);

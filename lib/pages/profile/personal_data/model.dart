@@ -47,11 +47,6 @@ class Doc {
     this.updatedAt,
     this.V,
     this.passwordChangedAt,
-    this.whatsapp,
-    this.facebookUrl,
-    this.instaUrl,
-    this.twitterUrl,
-    this.description,
   });
 
   String? id;
@@ -68,11 +63,6 @@ class Doc {
   String? updatedAt;
   int? V;
   String? passwordChangedAt;
-  String? whatsapp;
-  String? facebookUrl;
-  String? instaUrl;
-  String? twitterUrl;
-  String? description;
 
   Doc.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
@@ -92,11 +82,6 @@ class Doc {
       updatedAt = json['updatedAt'] ?? "";
       V = json['__v'] ?? 0;
       passwordChangedAt = json['passwordChangedAt'] ?? "";
-      whatsapp = json['whatsapp'] ?? "***********";
-      facebookUrl = json['facebookUrl'] ?? "www.ex.com";
-      instaUrl = json['instaUrl']?? "www.ex.com";
-      twitterUrl = json['twitterUrl']?? "www.ex.com";
-      description = json['description']?? "www.ex.com";
     }
   }
 }

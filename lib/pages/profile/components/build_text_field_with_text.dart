@@ -9,19 +9,20 @@ class TextFieldWithText extends StatelessWidget {
     Key? key,
     required this.title,
     required this.hint,
+    this.controller,
+    this.titleColor = Colors.black,
+    this.validator,
     this.autoValidate = AutovalidateMode.onUserInteraction,
-    this.keyboardType = TextInputType.text,
     this.isLastInput = false,
-    required this.validator,
-    this.expands = false, this.controller,
+    this.keyboardType = TextInputType.text,
   }) : super(key: key);
-
   final String title, hint;
-  final AutovalidateMode autoValidate;
-  final TextInputType? keyboardType;
-  final bool isLastInput, expands;
-  final FormFieldValidator validator;
+  final Color titleColor;
   final TextEditingController? controller;
+  final FormFieldValidator? validator;
+  final AutovalidateMode autoValidate;
+  final bool isLastInput;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -32,22 +33,26 @@ class TextFieldWithText extends StatelessWidget {
         children: [
           CustomText(
             text: title,
-            color: ColorManager.black,
+            color: titleColor,
             fontWeight: FontWeight.normal,
             fontSize: 18.sp,
           ),
           SizedBox(
-            height: 8.h,
+            height: 5.h,
           ),
           TextFormField(
             controller: controller,
+            validator: validator,
             autovalidateMode: autoValidate,
             textInputAction:
                 isLastInput ? TextInputAction.done : TextInputAction.next,
-            validator: validator,
             keyboardType: keyboardType,
-            maxLines: expands ? null : 1,
-            expands: expands,
+            style: GoogleFonts.almarai(
+              textStyle: TextStyle(
+                color: ColorManager.black,
+                fontSize: 18.sp,
+              ),
+            ),
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: GoogleFonts.almarai(
@@ -59,7 +64,6 @@ class TextFieldWithText extends StatelessWidget {
               ),
               filled: true,
               fillColor: ColorManager.lightGrey,
-              border: InputBorder.none,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
                   color: Colors.transparent,
@@ -68,7 +72,7 @@ class TextFieldWithText extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: ColorManager.lightGrey,
+                  color: ColorManager.grey,
                 ),
                 borderRadius: BorderRadius.circular(12.r),
               ),
