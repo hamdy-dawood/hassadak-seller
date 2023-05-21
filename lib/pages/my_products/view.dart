@@ -62,10 +62,18 @@ class _MyProductsViewState extends State<MyProductsView>
         ),
         body: SizedBox(
           width: 1.sw,
-          child: SizedBox(
-            height: 300.h,
-            child: BuildProductsBuilder(
-              allProductsCubit: allProductsCubit,
+          child: RefreshIndicator(
+            backgroundColor: ColorManager.secMainColor,
+            color: Colors.white,
+            onRefresh: () async {
+              await Future.delayed(const Duration(milliseconds: 300));
+              allProductsCubit.getAllProducts(id: CacheHelper.getId());
+            },
+            child: SizedBox(
+              height: 300.h,
+              child: BuildProductsBuilder(
+                allProductsCubit: allProductsCubit,
+              ),
             ),
           ),
         ),

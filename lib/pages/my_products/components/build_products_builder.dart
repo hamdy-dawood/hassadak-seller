@@ -6,6 +6,7 @@ import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/shimmer.dart';
 import 'package:hassadak_seller/constants/strings.dart';
+import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
 import 'package:hassadak_seller/pages/details/view.dart';
 import 'package:hassadak_seller/pages/my_products/all_products/cubit.dart';
@@ -39,7 +40,11 @@ class BuildProductsBuilder extends StatelessWidget {
         } else if (state is AllProductsFailedState) {
           return Text(state.msg);
         } else if (state is NetworkErrorState) {
-          return ErrorNetwork(reloadButton: false, press: () {});
+          return ErrorNetwork(
+              reloadButton: false,
+              press: () {
+                allProductsCubit.getAllProducts(id: CacheHelper.getId());
+              });
         } else {
           return ListView.builder(
             shrinkWrap: true,
@@ -52,26 +57,19 @@ class BuildProductsBuilder extends StatelessWidget {
                   navigateTo(
                     page: DetailsView(
                       id: "${product.id}",
-                      image:
-                          "${product.productUrl}",
+                      image: "${product.productUrl}",
                       userImage: UrlsStrings.userImageUrl,
-                      productName:
-                          "${product.name}",
-                      userName:
-                          "${product.uploaderName}",
-                      desc:
-                          "${product.desc}",
-                      phone:
-                          "${product.sellerPhone}",
-                      price:
-                          "${product.price}",
+                      productName: "${product.name}",
+                      userName: "${product.uploaderName}",
+                      desc: "${product.desc}",
+                      phone: "${product.sellerPhone}",
+                      isOffer: product.discountPerc == 0 ? false : true,
+                      price: "${product.price}",
+                      discountPerc: "${product.discountPerc}",
                       oldPrice:
-                          "${product.price! - (product.price! * 0.2)}",
-                      ratingsAverage: (allProductsCubit
-                              .allProducts!.data!.doc![index].ratingsAverage)!
-                          .toInt(),
-                      ratingsQuantity: (allProductsCubit
-                          .allProducts!.data!.doc![index].ratingsQuantity!),
+                          "${product.price! - (product.price! * (product.discountPerc! / 100))}",
+                      ratingsAverage: (product.ratingsAverage)!.toInt(),
+                      ratingsQuantity: (product.ratingsQuantity!),
                     ),
                   );
                 },
@@ -81,15 +79,16 @@ class BuildProductsBuilder extends StatelessWidget {
                     color: ColorManager.white,
                     height: 18.h,
                   ),
-                  favTap: () {
-                  },
-                  offer: 'خصم 20%',
+                  favTap: () {},
+                  isOffer: product.discountPerc == 0 ? false : true,
+                  offer: "خصم ${product.discountPerc}%",
                   image: "${product.productUrl}",
                   title: "${product.name}",
                   userName: "${product.uploaderName}",
                   userImage: 'assets/images/user.png',
                   price: "${product.price}",
-                  oldPrice: "${product.price! - (product.price! * 0.2)}",
+                  oldPrice:
+                      "${product.price! - (product.price! * (product.discountPerc! / 100))}",
                 ),
               );
             },
