@@ -59,13 +59,13 @@ class AddProductCubit extends Cubit<AddProductStates> {
     }
   }
 
-  void clearController(){
-    controllers.nameController.clear();
-    controllers.imageController.clear();
-    controllers.descController.clear();
-    controllers.priceController.clear();
-    controllers.discountPercController.clear();
-  }
+  // void clearController(){
+  //   controllers.nameController.clear();
+  //   controllers.imageController.clear();
+  //   controllers.descController.clear();
+  //   controllers.priceController.clear();
+  //   controllers.discountPercController.clear();
+  // }
 
   @override
   Future<void> close() {

@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hassadak_seller/components/custom_elevated.dart';
 import 'package:hassadak_seller/components/custom_text_field_expands.dart';
 import 'package:hassadak_seller/components/svg_icons.dart';
@@ -109,69 +107,69 @@ class _HomeViewState extends State<HomeView> {
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () async {
-                            final result = await FilePicker.platform
-                                .pickFiles(type: FileType.image);
-                            if (result != null) {
-                              selectImage = File(result.files.single.path!);
-                              setState(() {});
-                            }
-                          },
-                          child: SizedBox(
-                            height: 120.h,
-                            width: 100.h,
-                            child:
-                                SvgPicture.asset("assets/images/add_image.svg"),
-                          ),
-                        ),
-                        SizedBox(width: 20.w),
-                        selectImage == null
-                            ? const SizedBox()
-                            : Stack(
-                                children: [
-                                  Container(
-                                    height: 120.h,
-                                    width: 100.h,
-                                    decoration: BoxDecoration(
-                                      color: ColorManager.lightGrey,
-                                      borderRadius: BorderRadius.circular(20.r),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(12.w),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(12.r),
-                                        child: selectImage == null
-                                            ? const SizedBox()
-                                            : Image.file(
-                                                selectImage!,
-                                                fit: BoxFit.contain,
-                                              ),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 0,
-                                    left: 0,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        selectImage = null;
-                                        setState(() {});
-                                      },
-                                      icon: Icon(
-                                        Icons.cancel,
-                                        color: ColorManager.white,
-                                        size: 30.sp,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     GestureDetector(
+                    //       onTap: () async {
+                    //         final result = await FilePicker.platform
+                    //             .pickFiles(type: FileType.image);
+                    //         if (result != null) {
+                    //           selectImage = File(result.files.single.path!);
+                    //           setState(() {});
+                    //         }
+                    //       },
+                    //       child: SizedBox(
+                    //         height: 120.h,
+                    //         width: 100.h,
+                    //         child:
+                    //             SvgPicture.asset("assets/images/add_image.svg"),
+                    //       ),
+                    //     ),
+                    //     SizedBox(width: 20.w),
+                    //     selectImage == null
+                    //         ? const SizedBox()
+                    //         : Stack(
+                    //             children: [
+                    //               Container(
+                    //                 height: 120.h,
+                    //                 width: 100.h,
+                    //                 decoration: BoxDecoration(
+                    //                   color: ColorManager.lightGrey,
+                    //                   borderRadius: BorderRadius.circular(20.r),
+                    //                 ),
+                    //                 child: Padding(
+                    //                   padding: EdgeInsets.all(12.w),
+                    //                   child: ClipRRect(
+                    //                     borderRadius:
+                    //                         BorderRadius.circular(12.r),
+                    //                     child: selectImage == null
+                    //                         ? const SizedBox()
+                    //                         : Image.file(
+                    //                             selectImage!,
+                    //                             fit: BoxFit.contain,
+                    //                           ),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //               Positioned(
+                    //                 top: 0,
+                    //                 left: 0,
+                    //                 child: IconButton(
+                    //                   onPressed: () {
+                    //                     selectImage = null;
+                    //                     setState(() {});
+                    //                   },
+                    //                   icon: Icon(
+                    //                     Icons.cancel,
+                    //                     color: ColorManager.white,
+                    //                     size: 30.sp,
+                    //                   ),
+                    //                 ),
+                    //               )
+                    //             ],
+                    //           ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 0.02.sh,
                     ),
@@ -238,12 +236,14 @@ class _HomeViewState extends State<HomeView> {
                     BlocConsumer<AddProductCubit, AddProductStates>(
                       listener: (context, state) {
                         if (state is AddProductFailureState) {
-                         showMessage(message: "فشل اضافة المنتج");
-                         //  showMessage(
-                         //      message: state.msg, height: 80.h, maxLines: 10);
+                          showMessage(
+                              message: state.msg, height: 50.h, maxLines: 10);
                         } else if (state is AddProductSuccessState) {
-                          showMessage(message: "تمت الإضافة ");
-                          cubit.clearController();
+                          // showMessage(message: "تمت الإضافة ");
+                          //  navigateTo(
+                          //      page: UploadProductPhotoView(
+                          //        productID: widget.id,));
+                          // cubit.clearController();
                         }
                       },
                       builder: (context, state) {

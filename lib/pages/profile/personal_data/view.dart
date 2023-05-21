@@ -2,15 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hassadak_seller/components/custom_elevated.dart';
 import 'package:hassadak_seller/components/error_network.dart';
 import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
-import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
 import 'package:hassadak_seller/pages/profile/components/build_text_field_with_text.dart';
 import 'package:hassadak_seller/pages/profile/edit_data/view.dart';
 import 'package:hassadak_seller/pages/profile/personal_data/states.dart';
+import 'package:hassadak_seller/pages/upload_user_photo/view.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -80,7 +81,7 @@ class PersonalDataView extends StatelessWidget {
                               height: 10.h,
                             ),
                             CircleAvatar(
-                              radius: 50.r,
+                              radius: 60.r,
                               backgroundColor: ColorManager.shimmerBaseColor,
                             ),
                             SizedBox(
@@ -143,32 +144,57 @@ class PersonalDataView extends StatelessWidget {
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.h),
-                        child: CircleAvatar(
-                          radius: 60.r,
-                          backgroundColor: ColorManager.secMainColor,
-                          child: ClipOval(
-                            child: CachedNetworkImage(
-                              fit: BoxFit.contain,
-                              imageUrl:
-                                  "${cubit.profileResponse!.data!.doc!.image}",
-                              placeholder: (context, url) =>
-                                  JumpingDotsProgressIndicator(
-                                fontSize: 20.h,
-                                color: ColorManager.secMainColor,
-                              ),
-                              errorWidget: (context, url, error) => Center(
-                                child: Image.asset("assets/images/user.png"),
-                              ),
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 8.h),
+                                  height: 120.h,
+                                  width: 120.h,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
+                                    color: ColorManager.secMainColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child:  CachedNetworkImage(
+                                    fit: BoxFit.contain,
+                                    imageUrl:
+                                    "${cubit.profileResponse!.data!.doc!.userPhoto}",
+                                    placeholder: (context, url) =>
+                                        JumpingDotsProgressIndicator(
+                                          fontSize: 20.h,
+                                          color: ColorManager.white,
+                                        ),
+                                    errorWidget: (context, url, error) => Center(
+                                      child: Image.asset("assets/images/user.png"),
+                                    ),
+                                  ),
+                                ),
+                                CustomText(
+                                  textAlign: TextAlign.center,
+                                  text:
+                                  "${cubit.profileResponse!.data!.doc!.username}",
+                                  color: ColorManager.secMainColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 25.sp,
+                                ),
+                              ],
                             ),
-                          ),
+                            SizedBox(width: 20.w),
+                            CustomElevated(
+                              text: "تعديل الصورة",
+                              press: () {
+                                navigateTo(page: const UploadUserPhotoView());
+                              },
+                              wSize: 120.w,
+                              hSize: 30.h,
+                              btnColor: ColorManager.secMainColor,
+                              borderRadius: 10.r,
+                              fontSize: 12.sp,
+                            )
+                          ],
                         ),
-                      ),
-                      CustomText(
-                        textAlign: TextAlign.center,
-                        text: "${cubit.profileResponse!.data!.doc!.username}",
-                        color: ColorManager.secMainColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 25.sp,
                       ),
                       SizedBox(
                         height: 0.02.sh,

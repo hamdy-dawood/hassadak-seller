@@ -8,10 +8,11 @@ import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
 import 'package:hassadak_seller/constants/input_validator.dart';
+import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
-import 'package:hassadak_seller/pages/bottom_nav_bar/view.dart';
 import 'package:hassadak_seller/pages/login/view.dart';
 import 'package:hassadak_seller/pages/register/states.dart';
+import 'package:hassadak_seller/pages/upload_user_photo/view.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import 'cubit.dart';
@@ -108,23 +109,6 @@ class RegisterView extends StatelessWidget {
                           ),
                         ),
                         validator: emailValidator,
-                      ),
-                      SizedBox(
-                        height: 0.02.sh,
-                      ),
-                      CustomTextFormField(
-                        controller: cubit.controllers.imageController,
-                        keyboardType: TextInputType.text,
-                        hint: 'رابط الصورة',
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(10.0.w),
-                          child: SvgIcon(
-                            icon: "assets/icons/email.svg",
-                            color: ColorManager.grey,
-                            height: 10.h,
-                          ),
-                        ),
-                        validator: imageValidator,
                       ),
                       SizedBox(
                         height: 0.02.sh,
@@ -322,12 +306,12 @@ class RegisterView extends StatelessWidget {
                       BlocConsumer<RegisterCubit, RegisterStates>(
                         listener: (context, state) {
                           if (state is RegisterFailureState) {
-                            showMessage(message: "فشل انشاء حساب");
-                            // showMessage(
-                            //     message: state.msg, height: 80.h, maxLines: 10);
+                            // showMessage(message: "فشل انشاء حساب");
+                            showMessage(
+                                message: state.msg, height: 80.h, maxLines: 10);
                           } else if (state is RegisterSuccessState) {
-                            navigateTo(
-                                page: const NavBarView(), withHistory: false);
+                            navigateTo(page: const UploadUserPhotoView());
+                            print(CacheHelper.getToken());
                           }
                         },
                         builder: (context, state) {

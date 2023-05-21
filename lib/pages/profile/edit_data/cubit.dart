@@ -48,7 +48,7 @@ class EditDataCubit extends Cubit<EditDataStates> {
           emit(EditNetworkErrorState());
         } else if (e.type == DioErrorType.badResponse) {
           errorMsg = 'Received invalid status code: ${e.response?.statusCode}';
-          emit(EditDataFailureState(msg: errorMsg));
+          emit(EditNetworkErrorState());
         } else {
           errorMsg = 'An unexpected error : ${e.error}';
           emit(EditDataFailureState(msg: errorMsg));

@@ -22,7 +22,7 @@ class TextFieldWithText extends StatelessWidget {
   final FormFieldValidator? validator;
   final AutovalidateMode autoValidate;
   final bool isLastInput;
-  final TextInputType? keyboardType;
+  final TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -65,27 +65,27 @@ class TextFieldWithText extends StatelessWidget {
               filled: true,
               fillColor: ColorManager.lightGrey,
               enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.transparent,
+                borderSide: BorderSide(
+                  color: ColorManager.grey,
                 ),
-                borderRadius: BorderRadius.circular(12.r),
+                borderRadius: BorderRadius.circular(20.r),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: ColorManager.grey,
                 ),
-                borderRadius: BorderRadius.circular(12.r),
+                borderRadius: BorderRadius.circular(20.r),
               ),
               errorBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: ColorManager.red,
                   ),
-                  borderRadius: BorderRadius.circular(12.r)),
+                  borderRadius: BorderRadius.circular(20.r)),
               focusedErrorBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: ColorManager.red,
                   ),
-                  borderRadius: BorderRadius.circular(12.r)),
+                  borderRadius: BorderRadius.circular(20.r)),
             ),
           ),
         ],

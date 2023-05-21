@@ -1,10 +1,9 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hassadak_seller/components/back_with_title.dart';
 import 'package:hassadak_seller/components/custom_elevated.dart';
 import 'package:hassadak_seller/components/custom_text_field_expands.dart';
@@ -13,6 +12,7 @@ import 'package:hassadak_seller/constants/input_validator.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
 import 'package:hassadak_seller/pages/bottom_nav_bar/view.dart';
 import 'package:hassadak_seller/pages/profile/components/build_text_field_with_text.dart';
+import 'package:hassadak_seller/pages/upload_product_photo/view.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 import 'cubit.dart';
@@ -58,13 +58,11 @@ class _EditProductViewState extends State<EditProductView> {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () async {
-                            final result = await FilePicker.platform
-                                .pickFiles(type: FileType.image);
-                            if (result != null) {
-                              selectImage = File(result.files.single.path!);
-                              setState(() {});
-                            }
+                          onTap: () {
+                            navigateTo(
+                                page: UploadProductPhotoView(
+                              productID: widget.id,
+                            ));
                           },
                           child: SizedBox(
                             height: 120.h,
@@ -73,53 +71,88 @@ class _EditProductViewState extends State<EditProductView> {
                                 SvgPicture.asset("assets/images/add_image.svg"),
                           ),
                         ),
-                        SizedBox(width: 20.w),
-                        selectImage == null
-                            ? const SizedBox()
-                            : Stack(
-                                children: [
-                                  Container(
-                                    height: 120.h,
-                                    width: 100.h,
-                                    decoration: BoxDecoration(
-                                      color: ColorManager.lightGrey,
-                                      borderRadius: BorderRadius.circular(20.r),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(12.w),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(12.r),
-                                        child: selectImage == null
-                                            ? const SizedBox()
-                                            : Image.file(
-                                                selectImage!,
-                                                fit: BoxFit.contain,
-                                              ),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 0,
-                                    left: 0,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        selectImage = null;
-                                        setState(() {});
-                                      },
-                                      icon: Icon(
-                                        Icons.cancel,
-                                        color: ColorManager.white,
-                                        size: 30.sp,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                        SizedBox(width: 30.w),
+                        CustomElevated(
+                          text: "تعديل الصورة",
+                          press: () {
+                            navigateTo(
+                                page: UploadProductPhotoView(
+                              productID: widget.id,
+                            ));
+                          },
+                          wSize: 120.w,
+                          hSize: 30.h,
+                          btnColor: ColorManager.secMainColor,
+                          borderRadius: 10.r,
+                          fontSize: 12.sp,
+                        )
                       ],
                     ),
+                    // Row(
+                    //   children: [
+                    //     GestureDetector(
+                    //       onTap: () async {
+                    //         final result = await FilePicker.platform
+                    //             .pickFiles(type: FileType.image);
+                    //         if (result != null) {
+                    //           selectImage = File(result.files.single.path!);
+                    //           setState(() {});
+                    //         }
+                    //       },
+                    //       child: SizedBox(
+                    //         height: 120.h,
+                    //         width: 100.h,
+                    //         child:
+                    //             SvgPicture.asset("assets/images/add_image.svg"),
+                    //       ),
+                    //     ),
+                    //     SizedBox(width: 20.w),
+                    //     selectImage == null
+                    //         ? const SizedBox()
+                    //         : Stack(
+                    //             children: [
+                    //               Container(
+                    //                 height: 120.h,
+                    //                 width: 100.h,
+                    //                 decoration: BoxDecoration(
+                    //                   color: ColorManager.lightGrey,
+                    //                   borderRadius: BorderRadius.circular(20.r),
+                    //                 ),
+                    //                 child: Padding(
+                    //                   padding: EdgeInsets.all(12.w),
+                    //                   child: ClipRRect(
+                    //                     borderRadius:
+                    //                         BorderRadius.circular(12.r),
+                    //                     child: selectImage == null
+                    //                         ? const SizedBox()
+                    //                         : Image.file(
+                    //                             selectImage!,
+                    //                             fit: BoxFit.contain,
+                    //                           ),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //               Positioned(
+                    //                 top: 0,
+                    //                 left: 0,
+                    //                 child: IconButton(
+                    //                   onPressed: () {
+                    //                     selectImage = null;
+                    //                     setState(() {});
+                    //                   },
+                    //                   icon: Icon(
+                    //                     Icons.cancel,
+                    //                     color: ColorManager.white,
+                    //                     size: 30.sp,
+                    //                   ),
+                    //                 ),
+                    //               )
+                    //             ],
+                    //           ),
+                    //   ],
+                    // ),
                     SizedBox(
-                      height: 0.02.sh,
+                      height: 0.05.sh,
                     ),
                     TextFieldWithText(
                       controller: cubit.controllers.nameController,
@@ -184,9 +217,9 @@ class _EditProductViewState extends State<EditProductView> {
                     BlocConsumer<EditProductCubit, EditProductStates>(
                       listener: (context, state) {
                         if (state is EditProductFailureState) {
-                         // showMessage(message: "فشل تعديل المنتج");
-                           showMessage(
-                               message: state.msg, height: 80.h, maxLines: 10);
+                          // showMessage(message: "فشل تعديل المنتج");
+                          showMessage(
+                              message: state.msg, height: 80.h, maxLines: 10);
                         } else if (state is EditProductSuccessState) {
                           showMessage(message: "تم التعديل ");
                           navigateTo(

@@ -29,7 +29,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
           "lastName": controllers.lastNameController.text,
           "email": controllers.emailController.text,
           "username": controllers.userNameController.text,
-          "image": controllers.imageController.text,
           "telephone": controllers.phoneController.text,
           "whatsapp": controllers.whatsappController.text,
           "password": controllers.passwordController.text,
@@ -46,7 +45,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
           CacheHelper.saveToken("${response.data["token"]}");
           CacheHelper.saveId("${registerResponse!.user!.sId}");
           CacheHelper.saveName("${registerResponse!.user!.username}");
-          CacheHelper.saveImage("${registerResponse!.user!.image}");
           emit(RegisterSuccessState());
         } else {
           emit(RegisterFailureState(msg: response.data["status"]));
@@ -63,7 +61,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
         } else if (e.type == DioErrorType.badResponse) {
           errorMsg = 'Invalid status code: ${e.response?.data}';
           emit(RegisterFailureState(msg: errorMsg));
-          print(errorMsg);
         } else {
           errorMsg = 'An unexpected error : ${e.error}';
           emit(RegisterFailureState(msg: errorMsg));

@@ -116,24 +116,28 @@ class _DetailsViewState extends State<DetailsView> {
                           fontSize: 20.sp,
                         ),
                         const Spacer(),
-                        Column(
-                          children: [
-                            CustomText(
-                              text: "${widget.price} دينار",
-                              color: ColorManager.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.sp,
-                            ),
-                            widget.isOffer
-                                ? CustomText(
-                                    text: "${widget.oldPrice} دينار",
-                                    color: ColorManager.navGrey,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.sp,
-                                    textDecoration: TextDecoration.lineThrough,
-                                  )
-                                : const SizedBox(),
-                          ],
+                        Expanded(
+                          child: Column(
+                            children: [
+                              CustomText(
+                                text: "${widget.price} دينار",
+                                color: ColorManager.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.sp,
+                              ),
+                              widget.isOffer
+                                  ? CustomText(
+                                      text: "${widget.oldPrice} دينار",
+                                      color: ColorManager.navGrey,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.sp,
+                                      textDecoration:
+                                          TextDecoration.lineThrough,
+                                      maxLines: 1,
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          ),
                         ),
                       ],
                     ),
