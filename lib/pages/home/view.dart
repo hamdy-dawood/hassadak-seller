@@ -10,12 +10,14 @@ import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
 import 'package:hassadak_seller/constants/input_validator.dart';
-import 'package:hassadak_seller/constants/strings.dart';
 import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
 import 'package:hassadak_seller/pages/add_product/cubit.dart';
 import 'package:hassadak_seller/pages/add_product/states.dart';
 import 'package:hassadak_seller/pages/profile/components/build_text_field_with_text.dart';
+import 'package:hassadak_seller/pages/upload_product_photo/view.dart';
+import 'package:hassadak_seller/pages/upload_user_photo/cubit.dart';
+import 'package:hassadak_seller/pages/upload_user_photo/states.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class HomeView extends StatefulWidget {
@@ -34,6 +36,7 @@ class _HomeViewState extends State<HomeView> {
       create: (context) => AddProductCubit(),
       child: Builder(builder: (context) {
         final cubit = AddProductCubit.get(context);
+        final userCubit = UploadUserPhotoCubit.get(context);
         return Scaffold(
           backgroundColor: ColorManager.white,
           body: SizedBox(
@@ -53,37 +56,44 @@ class _HomeViewState extends State<HomeView> {
                         height: 50.h,
                       ),
                     ),
-                    Row(
-                      children: [
-                        ClipOval(
-                          child: CircleAvatar(
-                            radius: 22.r,
-                            backgroundColor: ColorManager.secMainColor,
-                            child: CachedNetworkImage(
-                                fit: BoxFit.contain,
-                                imageUrl: UrlsStrings.userImageUrl,
-                                placeholder: (context, url) =>
-                                    JumpingDotsProgressIndicator(
-                                      fontSize: 20.h,
-                                      color: ColorManager.secMainColor,
-                                    ),
-                                errorWidget: (context, url, error) => Center(
-                                    child:
-                                        Image.asset("assets/images/user.png"))),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        Expanded(
-                          child: CustomText(
-                            text: CacheHelper.getName(),
-                            color: ColorManager.mainColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.sp,
-                          ),
-                        ),
-                      ],
+                    BlocBuilder<UploadUserPhotoCubit, UploadUserPhotoStates>(
+                      builder: (context, state) {
+                        return Row(
+                          children: [
+                            ClipOval(
+                              child: CircleAvatar(
+                                radius: 22.r,
+                                backgroundColor: ColorManager.secMainColor,
+                                child: CachedNetworkImage(
+                                    fit: BoxFit.contain,
+                                    imageUrl:
+                                        // "${userCubit.uploadUserPhotoRepo!.updatedUser!.userPhoto}",
+                                        "",
+                                    placeholder: (context, url) =>
+                                        JumpingDotsProgressIndicator(
+                                          fontSize: 20.h,
+                                          color: ColorManager.secMainColor,
+                                        ),
+                                    errorWidget: (context, url, error) =>
+                                        Center(
+                                            child: Image.asset(
+                                                "assets/images/user.png"))),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Expanded(
+                              child: CustomText(
+                                text: CacheHelper.getName(),
+                                color: ColorManager.mainColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.sp,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -108,69 +118,6 @@ class _HomeViewState extends State<HomeView> {
                         ],
                       ),
                     ),
-                    // Row(
-                    //   children: [
-                    //     GestureDetector(
-                    //       onTap: () async {
-                    //         final result = await FilePicker.platform
-                    //             .pickFiles(type: FileType.image);
-                    //         if (result != null) {
-                    //           selectImage = File(result.files.single.path!);
-                    //           setState(() {});
-                    //         }
-                    //       },
-                    //       child: SizedBox(
-                    //         height: 120.h,
-                    //         width: 100.h,
-                    //         child:
-                    //             SvgPicture.asset("assets/images/add_image.svg"),
-                    //       ),
-                    //     ),
-                    //     SizedBox(width: 20.w),
-                    //     selectImage == null
-                    //         ? const SizedBox()
-                    //         : Stack(
-                    //             children: [
-                    //               Container(
-                    //                 height: 120.h,
-                    //                 width: 100.h,
-                    //                 decoration: BoxDecoration(
-                    //                   color: ColorManager.lightGrey,
-                    //                   borderRadius: BorderRadius.circular(20.r),
-                    //                 ),
-                    //                 child: Padding(
-                    //                   padding: EdgeInsets.all(12.w),
-                    //                   child: ClipRRect(
-                    //                     borderRadius:
-                    //                         BorderRadius.circular(12.r),
-                    //                     child: selectImage == null
-                    //                         ? const SizedBox()
-                    //                         : Image.file(
-                    //                             selectImage!,
-                    //                             fit: BoxFit.contain,
-                    //                           ),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               Positioned(
-                    //                 top: 0,
-                    //                 left: 0,
-                    //                 child: IconButton(
-                    //                   onPressed: () {
-                    //                     selectImage = null;
-                    //                     setState(() {});
-                    //                   },
-                    //                   icon: Icon(
-                    //                     Icons.cancel,
-                    //                     color: ColorManager.white,
-                    //                     size: 30.sp,
-                    //                   ),
-                    //                 ),
-                    //               )
-                    //             ],
-                    //           ),
-                    //   ],
-                    // ),
                     SizedBox(
                       height: 0.02.sh,
                     ),
@@ -238,15 +185,16 @@ class _HomeViewState extends State<HomeView> {
                       listener: (context, state) {
                         if (state is AddProductFailureState) {
                           showMessage(
-                              message: "state.msg", height: 50.h, maxLines: 10);
+                              message: state.msg, height: 50.h, maxLines: 10);
                         } else if (state is AddProductSuccessState) {
                           showMessage(message: "تمت الإضافة ");
                           cubit.clearController();
-                          // navigateTo(
-                          //   page: UploadProductPhotoView(
-                          //     productID: widget.id,
-                          //   ),
-                          // );
+                          navigateTo(
+                            page: UploadProductPhotoView(
+                              productID:
+                                  "${cubit.createProductResp!.newProduct!.id}",
+                            ),
+                          );
                         }
                       },
                       builder: (context, state) {

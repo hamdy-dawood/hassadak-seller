@@ -18,183 +18,179 @@ class UploadUserPhotoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => UploadUserPhotoCubit(),
-      child: Builder(builder: (context) {
-        final cubit = UploadUserPhotoCubit.get(context);
+    return Builder(builder: (context) {
+      final cubit = UploadUserPhotoCubit.get(context);
 
-        return Scaffold(
-          backgroundColor: ColorManager.white,
-          body: SizedBox(
-            width: 1.sw,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.h, bottom: 20.h),
-                    child: SvgIcon(
-                      icon: "assets/icons/logo.svg",
-                      color: ColorManager.green,
-                      height: 50.h,
-                    ),
+      return Scaffold(
+        backgroundColor: ColorManager.white,
+        body: SizedBox(
+          width: 1.sw,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: ListView(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 10.h, bottom: 20.h),
+                  child: SvgIcon(
+                    icon: "assets/icons/logo.svg",
+                    color: ColorManager.green,
+                    height: 50.h,
                   ),
-                  SizedBox(
-                    height: 0.05.sh,
+                ),
+                SizedBox(
+                  height: 0.05.sh,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: CustomText(
+                    text: "اصف الصورة الخاصة بك",
+                    color: ColorManager.secMainColor,
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: CustomText(
-                      text: "اصف الصورة الخاصة بك",
-                      color: ColorManager.secMainColor,
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 0.1.sh,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(15.r),
-                              topLeft: Radius.circular(15.r),
-                            ),
+                ),
+                SizedBox(
+                  height: 0.1.sh,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(15.r),
+                            topLeft: Radius.circular(15.r),
                           ),
-                          builder: (context) {
-                            return SizedBox(
-                              height: 120.h,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 50.h,
-                                    width: 50.h,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: ColorManager.mainColor,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(10.r)),
-                                    child: Center(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          cubit.chooseMyImage(
-                                              source: ImageSource.gallery);
-                                        },
-                                        child: Icon(
-                                          color: ColorManager.secMainColor,
-                                          Icons.image,
-                                          size: 30.sp,
-                                        ),
+                        ),
+                        builder: (context) {
+                          return SizedBox(
+                            height: 120.h,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 50.h,
+                                  width: 50.h,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: ColorManager.mainColor,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(10.r)),
+                                  child: Center(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        cubit.chooseMyImage(
+                                            source: ImageSource.gallery);
+                                      },
+                                      child: Icon(
+                                        color: ColorManager.secMainColor,
+                                        Icons.image,
+                                        size: 30.sp,
                                       ),
                                     ),
                                   ),
-                                  Container(
-                                    height: 50.h,
-                                    width: 50.h,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: ColorManager.mainColor,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(10.r)),
-                                    child: Center(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          cubit.chooseMyImage(
-                                              source: ImageSource.camera);
-                                        },
-                                        child: Icon(
-                                          color: ColorManager.secMainColor,
-                                          Icons.camera_alt,
-                                          size: 30.sp,
-                                        ),
+                                ),
+                                Container(
+                                  height: 50.h,
+                                  width: 50.h,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: ColorManager.mainColor,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(10.r)),
+                                  child: Center(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        cubit.chooseMyImage(
+                                            source: ImageSource.camera);
+                                      },
+                                      child: Icon(
+                                        color: ColorManager.secMainColor,
+                                        Icons.camera_alt,
+                                        size: 30.sp,
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            );
-                          });
-                    },
-                    child: BlocBuilder<UploadUserPhotoCubit,
-                        UploadUserPhotoStates>(builder: (context, state) {
-                      return Container(
-                        height: 140.h,
-                        width: 140.h,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          color: ColorManager.secMainColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            if (cubit.myImage != null)
-                              Image.file(
-                                cubit.myImage!,
-                                fit: BoxFit.cover,
-                              ),
-                            cubit.myImage != null
-                                ? const SizedBox()
-                                : Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 40.sp,
-                                    color: ColorManager.white,
-                                  ),
-                          ],
-                        ),
+                                ),
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                  child:
+                      BlocBuilder<UploadUserPhotoCubit, UploadUserPhotoStates>(
+                          builder: (context, state) {
+                    return Container(
+                      height: 140.h,
+                      width: 140.h,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        color: ColorManager.secMainColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          if (cubit.myImage != null)
+                            Image.file(
+                              cubit.myImage!,
+                              fit: BoxFit.cover,
+                            ),
+                          cubit.myImage != null
+                              ? const SizedBox()
+                              : Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 40.sp,
+                                  color: ColorManager.white,
+                                ),
+                        ],
+                      ),
+                    );
+                  }),
+                ),
+                SizedBox(
+                  height: 0.05.sh,
+                ),
+                BlocConsumer<UploadUserPhotoCubit, UploadUserPhotoStates>(
+                  listener: (context, state) {
+                    if (state is UploadUserPhotoFailureState) {
+                      showMessage(
+                          message: state.msg, height: 100.h, maxLines: 10);
+                    } else if (state is NetworkErrorState) {
+                      showMessage(message: "يرجي التحقق من الانترنت !");
+                    } else if (state is UploadUserPhotoSuccessState) {
+                      navigateTo(page: const NavBarView(), withHistory: false);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is UploadUserPhotoLoadingState) {
+                      return JumpingDotsProgressIndicator(
+                        fontSize: 50.h,
+                        color: ColorManager.secMainColor,
                       );
-                    }),
-                  ),
-                  SizedBox(
-                    height: 0.05.sh,
-                  ),
-                  BlocConsumer<UploadUserPhotoCubit, UploadUserPhotoStates>(
-                    listener: (context, state) {
-                      if (state is UploadUserPhotoFailureState) {
-                        showMessage(
-                            message: state.msg, height: 100.h, maxLines: 10);
-                      } else if (state is NetworkErrorState) {
-                        showMessage(message: "يرجي التحقق من الانترنت !");
-                      } else if (state is UploadUserPhotoSuccessState) {
-                        navigateTo(
-                            page: const NavBarView(), withHistory: false);
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state is UploadUserPhotoLoadingState) {
-                        return JumpingDotsProgressIndicator(
-                          fontSize: 50.h,
-                          color: ColorManager.secMainColor,
-                        );
-                      }
-                      return CustomElevated(
-                        text: "التالي",
-                        press: () {
-                          print(cubit.myImage!);
-                          cubit.uploadPhoto();
-                        },
-                        hSize: 50.h,
-                        btnColor: ColorManager.secMainColor,
-                        borderRadius: 20.r,
-                        fontSize: 18.sp,
-                      );
-                    },
-                  ),
-                ],
-              ),
+                    }
+                    return CustomElevated(
+                      text: "التالي",
+                      press: () {
+                        print(cubit.myImage!);
+                        cubit.uploadPhoto();
+                      },
+                      hSize: 50.h,
+                      btnColor: ColorManager.secMainColor,
+                      borderRadius: 20.r,
+                      fontSize: 18.sp,
+                    );
+                  },
+                ),
+              ],
             ),
           ),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }

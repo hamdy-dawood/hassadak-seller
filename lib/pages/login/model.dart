@@ -40,6 +40,7 @@ class User {
     this.telephone,
     this.role,
     this.image,
+    this.userPhoto,
     this.favouriteProduct,
     this.favouriteCompany,
     this.createdAt,
@@ -55,6 +56,7 @@ class User {
   String? telephone;
   String? role;
   String? image;
+  String? userPhoto;
   List<dynamic>? favouriteProduct;
   List<dynamic>? favouriteCompany;
   String? createdAt;
@@ -69,7 +71,8 @@ class User {
     username = json['username'];
     telephone = json['telephone'] ?? "";
     role = json['role'] ?? "";
-    image = json['image'] ?? UrlsStrings.noImageUrl;
+    image = json['image'] ?? UrlsStrings.userImageUrl;
+    userPhoto = json['userPhoto'] ?? UrlsStrings.userImageUrl;
     favouriteProduct =
         List.castFrom<dynamic, dynamic>(json['favouriteProduct'] ?? []);
     favouriteCompany =

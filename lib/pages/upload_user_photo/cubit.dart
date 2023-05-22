@@ -6,6 +6,7 @@ import 'package:hassadak_seller/constants/strings.dart';
 import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'model.dart';
 import 'states.dart';
 
 class UploadUserPhotoCubit extends Cubit<UploadUserPhotoStates> {
@@ -15,6 +16,7 @@ class UploadUserPhotoCubit extends Cubit<UploadUserPhotoStates> {
 
   final dio = Dio();
   File? myImage;
+  UploadUserPhotoRepo? uploadUserPhotoRepo;
 
   Future<void> uploadPhoto() async {
     emit(UploadUserPhotoLoadingState());
@@ -30,6 +32,8 @@ class UploadUserPhotoCubit extends Cubit<UploadUserPhotoStates> {
                 : null,
           }));
       if (response.data["status"] == "success" && response.statusCode == 201) {
+        uploadUserPhotoRepo = UploadUserPhotoRepo.fromJson(response.data);
+
         emit(UploadUserPhotoSuccessState());
       } else {
         emit(UploadUserPhotoFailureState(msg: response.data["status"]));

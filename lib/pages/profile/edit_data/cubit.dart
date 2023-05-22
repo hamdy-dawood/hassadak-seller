@@ -33,6 +33,7 @@ class EditDataCubit extends Cubit<EditDataStates> {
         });
         if (response.data["status"] == "success" &&
             response.statusCode == 200) {
+          CacheHelper.saveName(controllers.userNameController.text);
           emit(EditDataSuccessState());
         } else {
           emit(EditDataFailureState(msg: response.data["status"]));
@@ -48,7 +49,7 @@ class EditDataCubit extends Cubit<EditDataStates> {
           emit(EditNetworkErrorState());
         } else if (e.type == DioErrorType.badResponse) {
           errorMsg = 'Received invalid status code: ${e.response?.statusCode}';
-          emit(EditNetworkErrorState());
+          emit(EditDataFailureState(msg: errorMsg));
         } else {
           errorMsg = 'An unexpected error : ${e.error}';
           emit(EditDataFailureState(msg: errorMsg));

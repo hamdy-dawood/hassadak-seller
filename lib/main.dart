@@ -11,11 +11,12 @@ import 'pages/my_products/categories/cubit.dart';
 import 'pages/profile/edit_data/cubit.dart';
 import 'pages/profile/personal_data/cubit.dart';
 import 'pages/splash/view.dart';
+import 'pages/upload_user_photo/cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
-  // CacheHelper.clear();
+  CacheHelper.clear();
   runApp(const MyApp());
 }
 
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => PersonalDataCubit()),
             BlocProvider(create: (context) => EditDataCubit()),
             BlocProvider(create: (context) => DeleteProductCubit()),
+            BlocProvider(create: (context) => UploadUserPhotoCubit()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

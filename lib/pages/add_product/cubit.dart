@@ -5,6 +5,7 @@ import 'package:hassadak_seller/constants/strings.dart';
 import 'package:hassadak_seller/core/cache_helper.dart';
 
 import 'controllers.dart';
+import 'model.dart';
 import 'states.dart';
 
 class AddProductCubit extends Cubit<AddProductStates> {
@@ -15,6 +16,8 @@ class AddProductCubit extends Cubit<AddProductStates> {
   final dio = Dio();
   final formKey = GlobalKey<FormState>();
   final controllers = AddProductControllers();
+
+  CreateProductResp? createProductResp;
 
   Future<void> addProduct() async {
     if (formKey.currentState!.validate()) {
@@ -32,11 +35,9 @@ class AddProductCubit extends Cubit<AddProductStates> {
           "categoryId": "64496b508a88f4233a2b3e97",
           "price": controllers.priceController.text,
         });
-        //todo
-        if (response.data["status"] == "success" &&
-            response.statusCode == 201) {
+        if (response.data["status"] == "sucess" && response.statusCode == 201) {
+          createProductResp = CreateProductResp.fromJson(response.data);
           emit(AddProductSuccessState());
-          // print(response.data["newProduct"]["id"]);
         } else {
           emit(AddProductFailureState(msg: response.data["status"]));
         }
