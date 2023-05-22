@@ -42,14 +42,14 @@ class UploadProductPhotoCubit extends Cubit<UploadProductPhotoStates> {
       } else if (e.type == DioErrorType.receiveTimeout ||
           e.type == DioErrorType.sendTimeout) {
         errorMsg = 'Connection timed out';
-        emit(UploadProductPhotoFailureState(msg: errorMsg));
+        emit(NetworkErrorState());
       } else if (e.type == DioErrorType.badResponse) {
         errorMsg = 'Invalid status code: ${e.response?.data}';
         emit(UploadProductPhotoFailureState(msg: errorMsg));
         print(errorMsg);
       } else {
         errorMsg = 'An unexpected error : ${e.error}';
-        emit(UploadProductPhotoFailureState(msg: errorMsg));
+        emit(NetworkErrorState());
       }
     } catch (e) {
       emit(UploadProductPhotoFailureState(msg: 'An unknown error: $e'));
@@ -60,13 +60,13 @@ class UploadProductPhotoCubit extends Cubit<UploadProductPhotoStates> {
     ImagePicker.platform.getImage(source: source!).then((value) {
       if (value != null) {
         myImage = File(value.path);
-        emit(UploadProductChangeImageStates());
+        emit(UploadProductChangeImageState());
       }
     });
   }
 
   cancelImage() {
     myImage = null;
-    emit(CancelProductChangeImageStates());
+    emit(CancelProductChangeImageState());
   }
 }

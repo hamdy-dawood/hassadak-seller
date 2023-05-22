@@ -39,11 +39,11 @@ class PersonalDataCubit extends Cubit<PersonalDataStates> {
         errorMsg = 'Received invalid status code: ${e.response?.statusCode}';
         emit(PersonalDataFailureState(msg: errorMsg));
       } else {
-        errorMsg = 'An unexpected error : ${e.error}';
-        emit(PersonalDataFailureState(msg: errorMsg));
+        errorMsg = 'An unexpected error occurred: ${e.message}';
+        emit(NetworkErrorState());
       }
     } catch (e) {
-      emit(PersonalDataFailureState(msg: 'An unknown error : $e'));
+      emit(PersonalDataFailureState(msg: 'An unknown error occurred: $e'));
     }
   }
 }

@@ -10,6 +10,7 @@ import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
 import 'package:hassadak_seller/constants/input_validator.dart';
+import 'package:hassadak_seller/constants/strings.dart';
 import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
 import 'package:hassadak_seller/pages/add_product/cubit.dart';
@@ -60,7 +61,7 @@ class _HomeViewState extends State<HomeView> {
                             backgroundColor: ColorManager.secMainColor,
                             child: CachedNetworkImage(
                                 fit: BoxFit.contain,
-                                imageUrl: CacheHelper.getImage(),
+                                imageUrl: UrlsStrings.userImageUrl,
                                 placeholder: (context, url) =>
                                     JumpingDotsProgressIndicator(
                                       fontSize: 20.h,
@@ -237,13 +238,15 @@ class _HomeViewState extends State<HomeView> {
                       listener: (context, state) {
                         if (state is AddProductFailureState) {
                           showMessage(
-                              message: state.msg, height: 50.h, maxLines: 10);
+                              message: "state.msg", height: 50.h, maxLines: 10);
                         } else if (state is AddProductSuccessState) {
-                          // showMessage(message: "تمت الإضافة ");
-                          //  navigateTo(
-                          //      page: UploadProductPhotoView(
-                          //        productID: widget.id,));
-                          // cubit.clearController();
+                          showMessage(message: "تمت الإضافة ");
+                          cubit.clearController();
+                          // navigateTo(
+                          //   page: UploadProductPhotoView(
+                          //     productID: widget.id,
+                          //   ),
+                          // );
                         }
                       },
                       builder: (context, state) {

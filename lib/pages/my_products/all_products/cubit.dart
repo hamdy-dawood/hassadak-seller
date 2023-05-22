@@ -42,7 +42,7 @@ class AllProductsCubit extends Cubit<AllProductsStates> {
         emit(NetworkErrorState());
       } else if (e.type == DioErrorType.badResponse) {
         errorMsg = 'Received invalid status code: ${e.response?.statusCode}';
-        emit(NetworkErrorState());
+        emit(AllProductsFailedState(msg: errorMsg));
       } else {
         errorMsg = 'An unexpected error occurred: ${e.message}';
         emit(NetworkErrorState());

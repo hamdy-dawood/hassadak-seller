@@ -162,6 +162,8 @@ class UploadUserPhotoView extends StatelessWidget {
                       if (state is UploadUserPhotoFailureState) {
                         showMessage(
                             message: state.msg, height: 100.h, maxLines: 10);
+                      } else if (state is NetworkErrorState) {
+                        showMessage(message: "يرجي التحقق من الانترنت !");
                       } else if (state is UploadUserPhotoSuccessState) {
                         navigateTo(
                             page: const NavBarView(), withHistory: false);
@@ -177,7 +179,7 @@ class UploadUserPhotoView extends StatelessWidget {
                       return CustomElevated(
                         text: "التالي",
                         press: () {
-                          print( cubit.myImage!);
+                          print(cubit.myImage!);
                           cubit.uploadPhoto();
                         },
                         hSize: 50.h,

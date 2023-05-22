@@ -69,11 +69,8 @@ class _MyProductsViewState extends State<MyProductsView>
               await Future.delayed(const Duration(milliseconds: 300));
               allProductsCubit.getAllProducts(id: CacheHelper.getId());
             },
-            child: SizedBox(
-              height: 300.h,
-              child: BuildProductsBuilder(
-                allProductsCubit: allProductsCubit,
-              ),
+            child: BuildProductsBuilder(
+              allProductsCubit: allProductsCubit,
             ),
           ),
         ),

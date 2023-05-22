@@ -20,20 +20,23 @@ class AddProductCubit extends Cubit<AddProductStates> {
     if (formKey.currentState!.validate()) {
       emit(AddProductLoadingState());
       try {
-        dio.options.headers['Authorization'] = 'Bearer ${CacheHelper.getToken()}';
+        dio.options.headers['Authorization'] =
+            'Bearer ${CacheHelper.getToken()}';
         final response = await dio.post(UrlsStrings.allProductsUrl, data: {
           "name": controllers.nameController.text,
           "desc": controllers.descController.text,
           "productUrl": "https://mobizil.com/oppo-f3-specs/",
           "discount": "Success",
-          "discountPerc":controllers.discountPercController.text,
+          "discountPerc": controllers.discountPercController.text,
           "typeId": "64496b688a88f4233a2b3e9e",
           "categoryId": "64496b508a88f4233a2b3e97",
           "price": controllers.priceController.text,
         });
+        //todo
         if (response.data["status"] == "success" &&
-            response.statusCode == 200) {
+            response.statusCode == 201) {
           emit(AddProductSuccessState());
+          // print(response.data["newProduct"]["id"]);
         } else {
           emit(AddProductFailureState(msg: response.data["status"]));
         }
@@ -59,13 +62,13 @@ class AddProductCubit extends Cubit<AddProductStates> {
     }
   }
 
-  // void clearController(){
-  //   controllers.nameController.clear();
-  //   controllers.imageController.clear();
-  //   controllers.descController.clear();
-  //   controllers.priceController.clear();
-  //   controllers.discountPercController.clear();
-  // }
+  void clearController() {
+    controllers.nameController.clear();
+    controllers.imageController.clear();
+    controllers.descController.clear();
+    controllers.priceController.clear();
+    controllers.discountPercController.clear();
+  }
 
   @override
   Future<void> close() {

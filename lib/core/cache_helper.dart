@@ -47,15 +47,6 @@ class CacheHelper {
     return prefs.getString("name") ?? "";
   }
 
-  static Future<bool> saveImage(String image) async {
-    return await prefs.setString("image", image);
-  }
-
-  static String getImage() {
-    return prefs.getString("image") ?? "";
-  }
-
-
   static Future<bool> clear() {
     return prefs.clear();
   }

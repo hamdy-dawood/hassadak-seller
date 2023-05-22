@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hassadak_seller/constants/strings.dart';
 import 'package:hassadak_seller/core/cache_helper.dart';
@@ -23,8 +22,7 @@ class AllCategoriesCubit extends Cubit<AllCategoriesStates> {
     emit(AllCategoriesLoadingStates());
     try {
       dio.options.headers['Authorization'] = 'Bearer ${CacheHelper.getToken()}';
-      final response =
-          await dio.get(UrlsStrings.allCategoriesUrl);
+      final response = await dio.get(UrlsStrings.allCategoriesUrl);
       if (response.data["status"] == "success" && response.statusCode == 200) {
         allCategories = AllCategories.fromJson(response.data);
         length = allCategories!.results;

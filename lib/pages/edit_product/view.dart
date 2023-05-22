@@ -88,69 +88,6 @@ class _EditProductViewState extends State<EditProductView> {
                         )
                       ],
                     ),
-                    // Row(
-                    //   children: [
-                    //     GestureDetector(
-                    //       onTap: () async {
-                    //         final result = await FilePicker.platform
-                    //             .pickFiles(type: FileType.image);
-                    //         if (result != null) {
-                    //           selectImage = File(result.files.single.path!);
-                    //           setState(() {});
-                    //         }
-                    //       },
-                    //       child: SizedBox(
-                    //         height: 120.h,
-                    //         width: 100.h,
-                    //         child:
-                    //             SvgPicture.asset("assets/images/add_image.svg"),
-                    //       ),
-                    //     ),
-                    //     SizedBox(width: 20.w),
-                    //     selectImage == null
-                    //         ? const SizedBox()
-                    //         : Stack(
-                    //             children: [
-                    //               Container(
-                    //                 height: 120.h,
-                    //                 width: 100.h,
-                    //                 decoration: BoxDecoration(
-                    //                   color: ColorManager.lightGrey,
-                    //                   borderRadius: BorderRadius.circular(20.r),
-                    //                 ),
-                    //                 child: Padding(
-                    //                   padding: EdgeInsets.all(12.w),
-                    //                   child: ClipRRect(
-                    //                     borderRadius:
-                    //                         BorderRadius.circular(12.r),
-                    //                     child: selectImage == null
-                    //                         ? const SizedBox()
-                    //                         : Image.file(
-                    //                             selectImage!,
-                    //                             fit: BoxFit.contain,
-                    //                           ),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               Positioned(
-                    //                 top: 0,
-                    //                 left: 0,
-                    //                 child: IconButton(
-                    //                   onPressed: () {
-                    //                     selectImage = null;
-                    //                     setState(() {});
-                    //                   },
-                    //                   icon: Icon(
-                    //                     Icons.cancel,
-                    //                     color: ColorManager.white,
-                    //                     size: 30.sp,
-                    //                   ),
-                    //                 ),
-                    //               )
-                    //             ],
-                    //           ),
-                    //   ],
-                    // ),
                     SizedBox(
                       height: 0.05.sh,
                     ),
@@ -220,6 +157,8 @@ class _EditProductViewState extends State<EditProductView> {
                           // showMessage(message: "فشل تعديل المنتج");
                           showMessage(
                               message: state.msg, height: 80.h, maxLines: 10);
+                        } else if (state is EditNetworkErrorState) {
+                          showMessage(message: "يرجي التحقق من الانترنت !");
                         } else if (state is EditProductSuccessState) {
                           showMessage(message: "تم التعديل ");
                           navigateTo(

@@ -17,12 +17,9 @@ class DeleteProductCubit extends Cubit<DeleteProductStates> {
   Future<void> deleteProduct({required String id}) async {
     emit(DeleteProductLoadingState());
     try {
-      dio.options.headers['Authorization'] =
-      'Bearer ${CacheHelper.getToken()}';
-      final response =
-      await dio.delete("${UrlsStrings.allProductsUrl}/$id");
-      if (response.data["status"] == "success" &&
-          response.statusCode == 200) {
+      dio.options.headers['Authorization'] = 'Bearer ${CacheHelper.getToken()}';
+      final response = await dio.delete("${UrlsStrings.allProductsUrl}/$id");
+      if (response.data["status"] == "success" && response.statusCode == 200) {
         emit(DeleteProductSuccessState());
       } else {
         emit(DeleteProductFailureState(msg: response.data["status"]));

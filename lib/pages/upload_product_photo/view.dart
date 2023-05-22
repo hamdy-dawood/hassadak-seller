@@ -271,7 +271,10 @@ class UploadProductPhotoView extends StatelessWidget {
                       if (state is UploadProductPhotoFailureState) {
                         showMessage(
                             message: state.msg, height: 100.h, maxLines: 10);
+                      } else if (state is NetworkErrorState) {
+                        showMessage(message: "يرجي التحقق من الانترنت !");
                       } else if (state is UploadProductPhotoSuccessState) {
+                        showMessage(message: "تم التعديل ");
                         navigateTo(
                             page: const NavBarView(), withHistory: false);
                       }
@@ -298,12 +301,12 @@ class UploadProductPhotoView extends StatelessWidget {
                   SizedBox(
                     height: 0.15.sh,
                   ),
-
                   Align(
                     alignment: Alignment.centerLeft,
                     child: TextButton(
                         onPressed: () {
-                          navigateTo(page: const NavBarView(), withHistory: false);
+                          navigateTo(
+                              page: const NavBarView(), withHistory: false);
                         },
                         child: CustomText(
                           text: "تخطي",

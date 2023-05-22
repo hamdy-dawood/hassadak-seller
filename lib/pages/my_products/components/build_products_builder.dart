@@ -21,80 +21,122 @@ class BuildProductsBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AllProductsCubit, AllProductsStates>(
-      builder: (context, state) {
-        if (state is AllProductsLoadingState) {
-          return ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              return ContainerShimmer(
-                height: 100.h,
-                width: 0.5.sw,
-                margin: EdgeInsets.only(right: 10.w),
-                padding: EdgeInsets.all(0.h),
-              );
-            },
-          );
-        } else if (state is AllProductsFailedState) {
-          return Text(state.msg);
-        } else if (state is NetworkErrorState) {
-          return ErrorNetwork(
-              reloadButton: false,
-              press: () {
-                allProductsCubit.getAllProducts(id: CacheHelper.getId());
-              });
-        } else {
-          return ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: allProductsCubit.allProducts!.data!.doc!.length,
-            itemBuilder: (context, index) {
-              final product = allProductsCubit.allProducts!.data!.doc![index];
-              return InkWell(
-                onTap: () {
-                  navigateTo(
-                    page: DetailsView(
-                      id: "${product.id}",
-                      image: "${product.productUrl}",
-                      userImage: UrlsStrings.userImageUrl,
-                      productName: "${product.name}",
-                      userName: "${product.uploaderName}",
-                      desc: "${product.desc}",
-                      phone: "${product.sellerPhone}",
-                      isOffer: product.discountPerc == 0 ? false : true,
-                      price: "${product.price}",
-                      discountPerc: "${product.discountPerc}",
-                      oldPrice:
-                          "${product.price! - (product.price! * (product.discountPerc! / 100))}",
-                      ratingsAverage: (product.ratingsAverage)!.toInt(),
-                      ratingsQuantity: (product.ratingsQuantity!),
-                    ),
-                  );
-                },
-                child: ProductItem(
-                  favIcon: SvgIcon(
-                    icon: "assets/icons/heart.svg",
-                    color: ColorManager.white,
-                    height: 18.h,
-                  ),
-                  favTap: () {},
-                  isOffer: product.discountPerc == 0 ? false : true,
-                  offer: "خصم ${product.discountPerc}%",
-                  image: "${product.productUrl}",
-                  title: "${product.name}",
-                  userName: "${product.uploaderName}",
-                  userImage: 'assets/images/user.png',
-                  price: "${product.price}",
-                  oldPrice:
-                      "${product.price! - (product.price! * (product.discountPerc! / 100))}",
-                ),
-              );
-            },
-          );
-        }
+    final double itemHeight = (1.sh - kToolbarHeight * 1.5) / 2;
+    final double itemWidth = 1.sw / 2;
+
+    return RefreshIndicator(
+      backgroundColor: ColorManager.secMainColor,
+      color: Colors.white,
+      onRefresh: () async {
+        await Future.delayed(const Duration(milliseconds: 300));
+        allProductsCubit.getAllProducts(id: CacheHelper.getId());
       },
+      child: SizedBox(
+        height: 1.sh,
+        width: 1.sw,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: Column(
+            children: [
+              BlocBuilder<AllProductsCubit, AllProductsStates>(
+                builder: (context, state) {
+                  if (state is AllProductsLoadingState) {
+                    return Expanded(
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10.w,
+                          crossAxisSpacing: 10.w,
+                          childAspectRatio: (itemWidth / itemHeight),
+                        ),
+                        itemCount: 20,
+                        itemBuilder: (context, index) {
+                          return ContainerShimmer(
+                            height: 200.h,
+                            width: 0.5.sw,
+                            margin: EdgeInsets.all(0.h),
+                            padding: EdgeInsets.all(0.h),
+                          );
+                        },
+                      ),
+                    );
+                  } else if (state is AllProductsFailedState) {
+                    return Center(child: Text(state.msg));
+                  } else if (state is NetworkErrorState) {
+                    return ErrorNetwork(
+                      press: () {
+                        allProductsCubit.getAllProducts(
+                            id: CacheHelper.getId());
+                      },
+                    );
+                  } else {
+                    return Expanded(
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10.w,
+                          crossAxisSpacing: 0.w,
+                          childAspectRatio: (itemWidth / itemHeight),
+                        ),
+                        itemCount:
+                            allProductsCubit.allProducts!.data!.doc!.length,
+                        itemBuilder: (context, index) {
+                          final product =
+                              allProductsCubit.allProducts!.data!.doc![index];
+                          return InkWell(
+                            onTap: () {
+                              navigateTo(
+                                page: DetailsView(
+                                  id: "${product.id}",
+                                  image: "${product.productUrl}",
+                                  userImage: UrlsStrings.userImageUrl,
+                                  productName: "${product.name}",
+                                  userName: "${product.uploaderName}",
+                                  desc: "${product.desc}",
+                                  phone: "${product.sellerPhone}",
+                                  isOffer:
+                                      product.discountPerc == 0 ? false : true,
+                                  price: "${product.price}",
+                                  discountPerc: "${product.discountPerc}",
+                                  oldPrice:
+                                      "${product.price! - (product.price! * (product.discountPerc! / 100))}",
+                                  ratingsAverage:
+                                      (product.ratingsAverage)!.toInt(),
+                                  ratingsQuantity: (product.ratingsQuantity!),
+                                ),
+                              );
+                            },
+                            child: ProductItem(
+                              width: 0.44,
+                              favIcon: SvgIcon(
+                                icon: "assets/icons/heart.svg",
+                                color: ColorManager.white,
+                                height: 18.h,
+                              ),
+                              favTap: () {},
+                              isOffer: product.discountPerc == 0 ? false : true,
+                              offer: "خصم ${product.discountPerc}%",
+                              image: "${product.productUrl}",
+                              title: "${product.name}",
+                              userName: "${product.uploaderName}",
+                              userImage: UrlsStrings.userImageUrl,
+                              price: "${product.price}",
+                              oldPrice:
+                                  "${product.price! - (product.price! * (product.discountPerc! / 100))}",
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

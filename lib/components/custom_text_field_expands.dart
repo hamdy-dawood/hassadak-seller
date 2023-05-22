@@ -12,7 +12,9 @@ class TextFieldWithExpands extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     required this.validator,
     this.height = 80,
-    this.expands = false, this.controller, required this.title,
+    this.expands = false,
+    this.controller,
+    required this.title,
   }) : super(key: key);
 
   final String title, hint;
@@ -46,7 +48,7 @@ class TextFieldWithExpands extends StatelessWidget {
               autovalidateMode: autoValidate,
               validator: validator,
               keyboardType: keyboardType,
-              maxLines:null ,
+              maxLines: null,
               expands: expands,
               decoration: InputDecoration(
                 hintText: hint,

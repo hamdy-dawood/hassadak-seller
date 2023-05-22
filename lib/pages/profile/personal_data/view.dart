@@ -157,24 +157,26 @@ class PersonalDataView extends StatelessWidget {
                                     color: ColorManager.secMainColor,
                                     shape: BoxShape.circle,
                                   ),
-                                  child:  CachedNetworkImage(
+                                  child: CachedNetworkImage(
                                     fit: BoxFit.contain,
                                     imageUrl:
-                                    "${cubit.profileResponse!.data!.doc!.userPhoto}",
+                                        "${cubit.profileResponse!.data!.doc!.userPhoto}",
                                     placeholder: (context, url) =>
                                         JumpingDotsProgressIndicator(
-                                          fontSize: 20.h,
-                                          color: ColorManager.white,
-                                        ),
-                                    errorWidget: (context, url, error) => Center(
-                                      child: Image.asset("assets/images/user.png"),
+                                      fontSize: 20.h,
+                                      color: ColorManager.white,
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Center(
+                                      child:
+                                          Image.asset("assets/images/user.png"),
                                     ),
                                   ),
                                 ),
                                 CustomText(
                                   textAlign: TextAlign.center,
                                   text:
-                                  "${cubit.profileResponse!.data!.doc!.username}",
+                                      "${cubit.profileResponse!.data!.doc!.username}",
                                   color: ColorManager.secMainColor,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 25.sp,

@@ -54,11 +54,11 @@ class EditProductCubit extends Cubit<EditProductStates> {
           errorMsg = 'Received invalid status code: ${e.response?.statusCode}';
           emit(EditProductFailureState(msg: errorMsg));
         } else {
-          errorMsg = 'An unexpected error : ${e.error}';
-          emit(EditProductFailureState(msg: errorMsg));
+          errorMsg = 'An unexpected error occurred: ${e.message}';
+          emit(EditNetworkErrorState());
         }
       } catch (e) {
-        emit(EditProductFailureState(msg: 'An unknown error : $e'));
+        emit(EditProductFailureState(msg: 'An unknown error occurred: $e'));
       }
     }
   }
