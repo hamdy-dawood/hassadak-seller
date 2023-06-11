@@ -5,7 +5,6 @@ import 'package:hassadak_seller/components/error_network.dart';
 import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/shimmer.dart';
-import 'package:hassadak_seller/constants/strings.dart';
 import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
 import 'package:hassadak_seller/pages/details/view.dart';
@@ -91,16 +90,16 @@ class BuildProductsBuilder extends StatelessWidget {
                                 page: DetailsView(
                                   id: "${product.id}",
                                   image: "${product.productUrl}",
-                                  userImage: UrlsStrings.userImageUrl,
+                                  userImage: "${product.userPhoto}",
                                   productName: "${product.name}",
                                   userName: "${product.uploaderName}",
                                   desc: "${product.desc}",
                                   phone: "${product.sellerPhone}",
                                   isOffer:
                                       product.discountPerc == 0 ? false : true,
-                                  price: "${product.price}",
+                                  oldPrice: "${product.price}",
                                   discountPerc: "${product.discountPerc}",
-                                  oldPrice:
+                                  price:
                                       "${product.price! - (product.price! * (product.discountPerc! / 100))}",
                                   ratingsAverage:
                                       (product.ratingsAverage)!.toInt(),
@@ -121,9 +120,9 @@ class BuildProductsBuilder extends StatelessWidget {
                               image: "${product.productUrl}",
                               title: "${product.name}",
                               userName: "${product.uploaderName}",
-                              userImage: UrlsStrings.userImageUrl,
-                              price: "${product.price}",
-                              oldPrice:
+                              userImage: "${product.userPhoto}",
+                              oldPrice: "${product.price}",
+                              price:
                                   "${product.price! - (product.price! * (product.discountPerc! / 100))}",
                             ),
                           );

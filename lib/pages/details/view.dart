@@ -301,7 +301,7 @@ class _DetailsViewState extends State<DetailsView> {
                                               Navigator.pop(context);
                                               showMessage(
                                                   message: state.msg,
-                                                  height: 80.h,
+                                                  height: 40.h,
                                                   maxLines: 5);
                                             } else if (state
                                                 is DeleteProductSuccessState) {

@@ -1,3 +1,5 @@
+import 'package:hassadak_seller/constants/strings.dart';
+
 class AllProductsResponse {
   AllProductsResponse({
     this.status,
@@ -52,6 +54,7 @@ class Doc {
     this.sellerPhone,
     this.sellerWhatsapp,
     this.id,
+    this.userPhoto,
   });
 
   String? name;
@@ -72,6 +75,7 @@ class Doc {
   String? sellerPhone;
   String? sellerWhatsapp;
   String? id;
+  String? userPhoto;
 
   Doc.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
@@ -91,6 +95,7 @@ class Doc {
       updatedAt = json['updatedAt'] ?? "";
       status = json['status'] ?? false;
       sellerPhone = json['sellerPhone'] ?? "010";
+      userPhoto = json['userPhoto'] ?? UrlsStrings.userImageUrl;
       sellerWhatsapp = json['sellerWhatsapp'] ?? "010";
       id = json['id'] ?? "";
     }

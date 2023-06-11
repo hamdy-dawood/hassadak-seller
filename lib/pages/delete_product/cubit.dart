@@ -19,7 +19,7 @@ class DeleteProductCubit extends Cubit<DeleteProductStates> {
     try {
       dio.options.headers['Authorization'] = 'Bearer ${CacheHelper.getToken()}';
       final response = await dio.delete("${UrlsStrings.allProductsUrl}/$id");
-      if (response.data["status"] == "success" && response.statusCode == 200) {
+      if (response.statusCode == 201) {
         emit(DeleteProductSuccessState());
       } else {
         emit(DeleteProductFailureState(msg: response.data["status"]));

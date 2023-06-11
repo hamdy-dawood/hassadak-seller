@@ -63,27 +63,27 @@ class TextFieldWithExpands extends StatelessWidget {
                 fillColor: ColorManager.lightGrey,
                 border: InputBorder.none,
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
+                  borderSide: BorderSide(
+                    color: ColorManager.grey,
                   ),
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: ColorManager.lightGrey,
+                    color: ColorManager.grey,
                   ),
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
                 errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: ColorManager.red,
                     ),
-                    borderRadius: BorderRadius.circular(12.r)),
+                    borderRadius: BorderRadius.circular(20.r)),
                 focusedErrorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: ColorManager.red,
                     ),
-                    borderRadius: BorderRadius.circular(12.r)),
+                    borderRadius: BorderRadius.circular(20.r)),
               ),
             ),
           ),

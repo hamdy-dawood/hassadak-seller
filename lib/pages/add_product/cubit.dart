@@ -16,7 +16,7 @@ class AddProductCubit extends Cubit<AddProductStates> {
   final dio = Dio();
   final formKey = GlobalKey<FormState>();
   final controllers = AddProductControllers();
-
+  String? selectedCatId;
   CreateProductResp? createProductResp;
 
   Future<void> addProduct() async {
@@ -32,7 +32,7 @@ class AddProductCubit extends Cubit<AddProductStates> {
           "discount": "Success",
           "discountPerc": controllers.discountPercController.text,
           "typeId": "64496b688a88f4233a2b3e9e",
-          "categoryId": "64496b508a88f4233a2b3e97",
+          "categoryId": selectedCatId,
           "price": controllers.priceController.text,
         });
         if (response.data["status"] == "sucess" && response.statusCode == 201) {
@@ -69,6 +69,11 @@ class AddProductCubit extends Cubit<AddProductStates> {
     controllers.descController.clear();
     controllers.priceController.clear();
     controllers.discountPercController.clear();
+  }
+
+  onChangeCat(value) {
+    selectedCatId = value;
+    emit(ChangeCatState());
   }
 
   @override
