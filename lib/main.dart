@@ -16,7 +16,7 @@ import 'pages/upload_user_photo/cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
-  CacheHelper.clear();
+  // CacheHelper.clear();
   runApp(const MyApp());
 }
 
