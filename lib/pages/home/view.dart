@@ -105,7 +105,7 @@ class _HomeViewState extends State<HomeView> {
                               Expanded(
                                 child: CustomText(
                                   text:
-                                      "${personalCubit.profileResponse!.data!.doc!.username}",
+                                      "${personalCubit.profileResponse!.data!.doc!.firstName} ${personalCubit.profileResponse!.data!.doc!.lastName}",
                                   color: ColorManager.mainColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.sp,
@@ -258,8 +258,7 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                 ),
                               );
-                            }
-                            if (state is AllCategoriesSuccessStates) {
+                            } else if (state is AllCategoriesSuccessStates) {
                               return DropdownButton<String>(
                                 style: GoogleFonts.almarai(
                                   textStyle: TextStyle(
@@ -268,7 +267,8 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                 ),
                                 alignment: Alignment.center,
-                                iconEnabledColor: ColorManager.lightGrey,
+                                isExpanded: true,
+                                iconEnabledColor: ColorManager.black,
                                 dropdownColor: ColorManager.lightGrey,
                                 elevation: 0,
                                 borderRadius: BorderRadius.circular(20.r),

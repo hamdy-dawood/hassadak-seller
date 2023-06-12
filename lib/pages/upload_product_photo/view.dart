@@ -304,17 +304,18 @@ class UploadProductPhotoView extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: TextButton(
-                        onPressed: () {
-                          navigateTo(
-                              page: const NavBarView(), withHistory: false);
-                        },
-                        child: CustomText(
-                          text: "تخطي",
-                          color: ColorManager.secMainColor,
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.normal,
-                        )),
-                  )
+                      onPressed: () {
+                        navigateTo(
+                            page: const NavBarView(), withHistory: false);
+                      },
+                      child: CustomText(
+                        text: "تخطي",
+                        color: ColorManager.secMainColor,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

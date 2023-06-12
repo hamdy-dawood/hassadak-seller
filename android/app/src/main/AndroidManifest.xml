@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hamdy.hassadak_seller.hassadak_seller">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="hassadak_seller"
+        android:label="Hassadak Seller"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

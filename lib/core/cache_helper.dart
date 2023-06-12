@@ -39,14 +39,6 @@ class CacheHelper {
     return prefs.remove("id");
   }
 
-  static Future<bool> saveName(String name) async {
-    return await prefs.setString("name", name);
-  }
-
-  static String getName() {
-    return prefs.getString("name") ?? "";
-  }
-
   static Future<bool> clear() {
     return prefs.clear();
   }

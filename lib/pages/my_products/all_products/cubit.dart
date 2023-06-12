@@ -20,7 +20,6 @@ class AllProductsCubit extends Cubit<AllProductsStates> {
     emit(AllProductsLoadingState());
     try {
       dio.options.headers['Authorization'] = 'Bearer ${CacheHelper.getToken()}';
-
       final response =
           await dio.get(UrlsStrings.allProductsUrl, queryParameters: {
         "uploaderId": id,
@@ -28,6 +27,7 @@ class AllProductsCubit extends Cubit<AllProductsStates> {
       if (response.data["status"] == "success" && response.statusCode == 200) {
         allProducts = AllProductsResponse.fromJson(response.data);
         emit(AllProductsSuccessState());
+        print(response.data);
       } else {
         emit(AllProductsFailedState(msg: response.data["status"]));
       }

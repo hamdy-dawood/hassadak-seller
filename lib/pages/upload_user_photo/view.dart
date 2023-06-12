@@ -176,8 +176,11 @@ class UploadUserPhotoView extends StatelessWidget {
                     return CustomElevated(
                       text: "التالي",
                       press: () {
-                        print(cubit.myImage!);
-                        cubit.uploadPhoto();
+                        if (cubit.myImage == null) {
+                          showMessage(message: "من فضلك ادخل الصورة !");
+                        } else {
+                          cubit.uploadPhoto();
+                        }
                       },
                       hSize: 50.h,
                       btnColor: ColorManager.secMainColor,
@@ -185,6 +188,23 @@ class UploadUserPhotoView extends StatelessWidget {
                       fontSize: 18.sp,
                     );
                   },
+                ),
+                SizedBox(
+                  height: 0.10.sh,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: () {
+                      navigateTo(page: const NavBarView(), withHistory: false);
+                    },
+                    child: CustomText(
+                      text: "تخطي",
+                      color: ColorManager.secMainColor,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
                 ),
               ],
             ),

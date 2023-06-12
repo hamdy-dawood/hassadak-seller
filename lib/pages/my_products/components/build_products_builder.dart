@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hassadak_seller/components/error_network.dart';
 import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
+import 'package:hassadak_seller/constants/custom_text.dart';
 import 'package:hassadak_seller/constants/shimmer.dart';
 import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
@@ -70,65 +71,81 @@ class BuildProductsBuilder extends StatelessWidget {
                       },
                     );
                   } else {
-                    return Expanded(
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10.w,
-                          crossAxisSpacing: 0.w,
-                          childAspectRatio: (itemWidth / itemHeight),
-                        ),
-                        itemCount:
-                            allProductsCubit.allProducts!.data!.doc!.length,
-                        itemBuilder: (context, index) {
-                          final product =
-                              allProductsCubit.allProducts!.data!.doc![index];
-                          return InkWell(
-                            onTap: () {
-                              navigateTo(
-                                page: DetailsView(
-                                  id: "${product.id}",
-                                  image: "${product.productUrl}",
-                                  userImage: "${product.userPhoto}",
-                                  productName: "${product.name}",
-                                  userName: "${product.uploaderName}",
-                                  desc: "${product.desc}",
-                                  phone: "${product.sellerPhone}",
-                                  isOffer:
-                                      product.discountPerc == 0 ? false : true,
-                                  oldPrice: "${product.price}",
-                                  discountPerc: "${product.discountPerc}",
-                                  price:
-                                      "${product.price! - (product.price! * (product.discountPerc! / 100))}",
-                                  ratingsAverage:
-                                      (product.ratingsAverage)!.toInt(),
-                                  ratingsQuantity: (product.ratingsQuantity!),
-                                ),
-                              );
-                            },
-                            child: ProductItem(
-                              width: 0.44,
-                              favIcon: SvgIcon(
-                                icon: "assets/icons/heart.svg",
-                                color: ColorManager.white,
-                                height: 18.h,
+                    return allProductsCubit.allProducts!.data!.doc!.isEmpty
+                        ? Expanded(
+                            child: Center(
+                              child: CustomText(
+                                text: "لا  يوجد لديك منتجات",
+                                color: ColorManager.black,
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.normal,
                               ),
-                              favTap: () {},
-                              isOffer: product.discountPerc == 0 ? false : true,
-                              offer: "خصم ${product.discountPerc}%",
-                              image: "${product.productUrl}",
-                              title: "${product.name}",
-                              userName: "${product.uploaderName}",
-                              userImage: "${product.userPhoto}",
-                              oldPrice: "${product.price}",
-                              price:
-                                  "${product.price! - (product.price! * (product.discountPerc! / 100))}",
+                            ),
+                          )
+                        : Expanded(
+                            child: GridView.builder(
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 10.w,
+                                crossAxisSpacing: 0.w,
+                                childAspectRatio: (itemWidth / itemHeight),
+                              ),
+                              itemCount: allProductsCubit
+                                  .allProducts!.data!.doc!.length,
+                              itemBuilder: (context, index) {
+                                final product = allProductsCubit
+                                    .allProducts!.data!.doc![index];
+                                return InkWell(
+                                  onTap: () {
+                                    navigateTo(
+                                      page: DetailsView(
+                                        id: "${product.id}",
+                                        image: "${product.productUrl}",
+                                        userImage: "${product.userPhoto}",
+                                        productName: "${product.name}",
+                                        userName: "${product.uploaderName}",
+                                        desc: "${product.desc}",
+                                        phone: "${product.sellerPhone}",
+                                        isOffer: product.discountPerc == 0
+                                            ? false
+                                            : true,
+                                        oldPrice: "${product.price}",
+                                        discountPerc: "${product.discountPerc}",
+                                        price:
+                                            "${product.price! - (product.price! * (product.discountPerc! / 100))}",
+                                        ratingsAverage:
+                                            (product.ratingsAverage)!.toInt(),
+                                        ratingsQuantity:
+                                            (product.ratingsQuantity!),
+                                      ),
+                                    );
+                                  },
+                                  child: ProductItem(
+                                    width: 0.44,
+                                    favIcon: SvgIcon(
+                                      icon: "assets/icons/heart.svg",
+                                      color: ColorManager.white,
+                                      height: 18.h,
+                                    ),
+                                    favTap: () {},
+                                    isOffer: product.discountPerc == 0
+                                        ? false
+                                        : true,
+                                    offer: "خصم ${product.discountPerc}%",
+                                    image: "${product.productUrl}",
+                                    title: "${product.name}",
+                                    userName: "${product.uploaderName}",
+                                    userImage: "${product.userPhoto}",
+                                    oldPrice: "${product.price}",
+                                    price:
+                                        "${product.price! - (product.price! * (product.discountPerc! / 100))}",
+                                  ),
+                                );
+                              },
                             ),
                           );
-                        },
-                      ),
-                    );
                   }
                 },
               ),

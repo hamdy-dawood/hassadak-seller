@@ -33,7 +33,6 @@ class EditDataCubit extends Cubit<EditDataStates> {
         });
         if (response.data["status"] == "success" &&
             response.statusCode == 200) {
-          CacheHelper.saveName(controllers.userNameController.text);
           emit(EditDataSuccessState());
         } else {
           emit(EditDataFailureState(msg: response.data["status"]));

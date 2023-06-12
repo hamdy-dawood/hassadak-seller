@@ -43,8 +43,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
             response.statusCode == 201) {
           registerResponse = RegisterResponse.fromJson(response.data);
           CacheHelper.saveToken("${response.data["token"]}");
-          CacheHelper.saveId("${registerResponse!.user!.sId}");
-          CacheHelper.saveName("${registerResponse!.user!.username}");
+          CacheHelper.saveId("${response.data["data"]["user"]["_id"]}");
           emit(RegisterSuccessState());
         } else {
           emit(RegisterFailureState(msg: response.data["status"]));
@@ -57,13 +56,13 @@ class RegisterCubit extends Cubit<RegisterStates> {
         } else if (e.type == DioErrorType.receiveTimeout ||
             e.type == DioErrorType.sendTimeout) {
           errorMsg = 'Connection timed out';
-          emit(RegisterFailureState(msg: errorMsg));
+          emit(NetworkErrorState());
         } else if (e.type == DioErrorType.badResponse) {
           errorMsg = 'Invalid status code: ${e.response?.data}';
           emit(RegisterFailureState(msg: errorMsg));
         } else {
           errorMsg = 'An unexpected error : ${e.error}';
-          emit(RegisterFailureState(msg: errorMsg));
+          emit(NetworkErrorState());
         }
       } catch (e) {
         emit(RegisterFailureState(msg: 'An unknown error: $e'));

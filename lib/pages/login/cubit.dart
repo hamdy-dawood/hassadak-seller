@@ -33,7 +33,6 @@ class LoginCubit extends Cubit<LoginStates> {
           loginResponse = LoginResponse.fromJson(emailResponse.data);
           CacheHelper.saveToken("${emailResponse.data["token"]}");
           CacheHelper.saveId("${loginResponse!.data!.user!.id}");
-          CacheHelper.saveName("${loginResponse!.data!.user!.username}");
           emit(LoginSuccessState());
         } else {
           emit(LoginFailureState(msg: emailResponse.data["status"]));
@@ -52,7 +51,7 @@ class LoginCubit extends Cubit<LoginStates> {
           emit(LoginFailureState(msg: errorMsg));
         } else {
           errorMsg = 'An unexpected error : ${e.error}';
-          emit(LoginFailureState(msg: errorMsg));
+          emit(NetworkErrorState(msg: errorMsg));
         }
       } catch (e) {
         emit(LoginFailureState(msg: 'An unknown error: $e'));
@@ -74,7 +73,6 @@ class LoginCubit extends Cubit<LoginStates> {
           loginResponse = LoginResponse.fromJson(phoneResponse.data);
           CacheHelper.saveToken("${phoneResponse.data["token"]}");
           CacheHelper.saveId("${loginResponse!.data!.user!.id}");
-          CacheHelper.saveName("${loginResponse!.data!.user!.username}");
           emit(LoginSuccessState());
         } else {
           emit(LoginFailureState(msg: phoneResponse.data["status"]));
@@ -93,7 +91,7 @@ class LoginCubit extends Cubit<LoginStates> {
           emit(LoginFailureState(msg: errorMsg));
         } else {
           errorMsg = 'An unexpected error : ${e.error}';
-          emit(LoginFailureState(msg: errorMsg));
+          emit(NetworkErrorState(msg: errorMsg));
         }
       } catch (e) {
         emit(LoginFailureState(msg: 'An unknown error: $e'));

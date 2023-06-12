@@ -306,12 +306,13 @@ class RegisterView extends StatelessWidget {
                       BlocConsumer<RegisterCubit, RegisterStates>(
                         listener: (context, state) {
                           if (state is RegisterFailureState) {
-                            // showMessage(message: "فشل انشاء حساب");
                             showMessage(
                                 message: state.msg, height: 80.h, maxLines: 10);
                           } else if (state is RegisterSuccessState) {
                             navigateTo(page: const UploadUserPhotoView());
                             print(CacheHelper.getToken());
+                          } else if (state is NetworkErrorState) {
+                            showMessage(message: "يرجي التحقق من الانترنت");
                           }
                         },
                         builder: (context, state) {
