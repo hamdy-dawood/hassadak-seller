@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hassadak_seller/components/custom_elevated.dart';
-import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
@@ -31,9 +31,8 @@ class UploadUserPhotoView extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: 10.h, bottom: 20.h),
-                  child: SvgIcon(
-                    icon: "assets/icons/logo.svg",
-                    color: ColorManager.green,
+                  child: SvgPicture.asset(
+                    "assets/icons/logo.svg",
                     height: 50.h,
                   ),
                 ),

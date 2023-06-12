@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hassadak_seller/components/svg_icons.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/pages/bottom_nav_bar/view.dart';
@@ -52,9 +52,8 @@ class _SplashViewState extends State<SplashView> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SvgIcon(
-              icon: "assets/icons/logo.svg",
-              color: ColorManager.green,
+            SvgPicture.asset(
+              "assets/icons/logo.svg",
               height: 100.h,
             ),
           ],

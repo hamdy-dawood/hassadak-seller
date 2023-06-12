@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hassadak_seller/components/back_with_title.dart';
 import 'package:hassadak_seller/components/custom_elevated.dart';
 import 'package:hassadak_seller/components/custom_text_field_expands.dart';
-import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
 
@@ -30,9 +29,8 @@ class AboutView extends StatelessWidget {
                 height: 20.h,
               ),
               Center(
-                child: SvgIcon(
-                  icon: "assets/icons/logo.svg",
-                  color: ColorManager.green,
+                child: SvgPicture.asset(
+                  "assets/icons/logo.svg",
                   height: 70.h,
                 ),
               ),

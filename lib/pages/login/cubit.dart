@@ -47,7 +47,7 @@ class LoginCubit extends Cubit<LoginStates> {
           errorMsg = 'Connection timed out';
           emit(NetworkErrorState(msg: errorMsg));
         } else if (e.type == DioErrorType.badResponse) {
-          errorMsg = 'Invalid status code: ${e.error}';
+          errorMsg = '${e.response?.data}';
           emit(LoginFailureState(msg: errorMsg));
         } else {
           errorMsg = 'An unexpected error : ${e.error}';
@@ -87,7 +87,7 @@ class LoginCubit extends Cubit<LoginStates> {
           errorMsg = 'Connection timed out';
           emit(NetworkErrorState(msg: errorMsg));
         } else if (e.type == DioErrorType.badResponse) {
-          errorMsg = 'Invalid status code: ${e.error}';
+          errorMsg = '${e.response?.data}';
           emit(LoginFailureState(msg: errorMsg));
         } else {
           errorMsg = 'An unexpected error : ${e.error}';

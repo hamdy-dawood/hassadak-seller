@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,7 +60,8 @@ class RegisterCubit extends Cubit<RegisterStates> {
           errorMsg = 'Connection timed out';
           emit(NetworkErrorState());
         } else if (e.type == DioErrorType.badResponse) {
-          errorMsg = 'Invalid status code: ${e.response?.data}';
+          final responseData = json.decode(e.response?.data);
+          errorMsg = responseData["message"];
           emit(RegisterFailureState(msg: errorMsg));
         } else {
           errorMsg = 'An unexpected error : ${e.error}';

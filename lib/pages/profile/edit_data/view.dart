@@ -64,221 +64,251 @@ class EditDataView extends StatelessWidget {
         body: SizedBox(
           width: 1.sw,
           height: 1.sh,
-          child: Form(
-            key: editCubit.formKey,
-            autovalidateMode: AutovalidateMode.disabled,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: BlocBuilder<PersonalDataCubit, PersonalDataStates>(
-                builder: (context, state) {
-                  if (state is PersonalDataLoadingState) {
-                    return SizedBox(
-                      height: 1.sh,
-                      child: Shimmer.fromColors(
-                        baseColor: ColorManager.shimmerBaseColor,
-                        highlightColor: ColorManager.shimmerHighlightColor,
-                        direction: ShimmerDirection.rtl,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              CircleAvatar(
-                                radius: 60.r,
-                                backgroundColor: ColorManager.shimmerBaseColor,
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Container(
-                                height: 20.h,
-                                width: 150.w,
-                                color: ColorManager.shimmerBaseColor,
-                              ),
-                              SizedBox(
-                                height: 30.h,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: List.generate(
-                                  5,
-                                  (index) => Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Container(
-                                          height: 15.h,
-                                          width: 150.w,
-                                          color: ColorManager.shimmerBaseColor,
-                                        ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: BlocBuilder<PersonalDataCubit, PersonalDataStates>(
+              builder: (context, state) {
+                if (state is PersonalDataLoadingState) {
+                  return SizedBox(
+                    height: 1.sh,
+                    child: Shimmer.fromColors(
+                      baseColor: ColorManager.shimmerBaseColor,
+                      highlightColor: ColorManager.shimmerHighlightColor,
+                      direction: ShimmerDirection.rtl,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            CircleAvatar(
+                              radius: 60.r,
+                              backgroundColor: ColorManager.shimmerBaseColor,
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Container(
+                              height: 20.h,
+                              width: 150.w,
+                              color: ColorManager.shimmerBaseColor,
+                            ),
+                            SizedBox(
+                              height: 30.h,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: List.generate(
+                                5,
+                                (index) => Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Container(
+                                        height: 15.h,
+                                        width: 150.w,
+                                        color: ColorManager.shimmerBaseColor,
                                       ),
-                                      SizedBox(
-                                        height: 10.h,
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Container(
+                                      height: 50.h,
+                                      width: 300.w,
+                                      decoration: BoxDecoration(
+                                        color: ColorManager.shimmerBaseColor,
+                                        borderRadius:
+                                            BorderRadius.circular(20.r),
                                       ),
-                                      Container(
-                                        height: 50.h,
-                                        width: 300.w,
-                                        decoration: BoxDecoration(
-                                          color: ColorManager.shimmerBaseColor,
-                                          borderRadius:
-                                              BorderRadius.circular(20.r),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10.h,
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  } else if (state is NetworkErrorState) {
-                    return ErrorNetwork(press: () {
-                      myDataCubit.getPersonalData();
-                    });
-                  } else if (state is PersonalDataFailureState) {
-                    return Center(child: Text(state.msg));
-                  } else {
-                    return ListView(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.h),
-                          child: Row(
-                            children: [
-                              Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 8.h),
-                                    height: 120.h,
-                                    width: 120.h,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      color: ColorManager.secMainColor,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: CachedNetworkImage(
-                                      fit: BoxFit.contain,
-                                      imageUrl:
-                                          "${myDataCubit.profileResponse!.data!.doc!.userPhoto}",
-                                      placeholder: (context, url) =>
-                                          JumpingDotsProgressIndicator(
-                                        fontSize: 20.h,
-                                        color: ColorManager.white,
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Center(
-                                        child: Image.asset(
-                                            "assets/images/user.png"),
-                                      ),
-                                    ),
-                                  ),
-                                  CustomText(
-                                    textAlign: TextAlign.center,
-                                    text:
-                                        "${myDataCubit.profileResponse!.data!.doc!.username}",
+                    ),
+                  );
+                } else if (state is NetworkErrorState) {
+                  return ErrorNetwork(press: () {
+                    myDataCubit.getPersonalData();
+                  });
+                } else if (state is PersonalDataFailureState) {
+                  return Center(child: Text(state.msg));
+                } else {
+                  return ListView(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.h),
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 8.h),
+                                  height: 120.h,
+                                  width: 120.h,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
                                     color: ColorManager.secMainColor,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 25.sp,
+                                    shape: BoxShape.circle,
                                   ),
-                                ],
-                              ),
-                              SizedBox(width: 20.w),
-                              CustomElevated(
-                                text: "تعديل الصورة",
-                                press: () {
-                                  navigateTo(page: const UploadUserPhotoView());
-                                },
-                                wSize: 120.w,
-                                hSize: 30.h,
-                                btnColor: ColorManager.secMainColor,
-                                borderRadius: 10.r,
-                                fontSize: 12.sp,
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 0.04.sh,
-                        ),
-                        TextFieldWithText(
-                          controller: editCubit.controllers.firstNameController,
-                          title: "الاسم الاول",
-                          hint:
-                              "${myDataCubit.profileResponse!.data!.doc!.firstName}",
-                          validator: firstNameValidator,
-                        ),
-                        TextFieldWithText(
-                          controller: editCubit.controllers.lastNameController,
-                          title: "الاسم الاخير",
-                          hint:
-                              "${myDataCubit.profileResponse!.data!.doc!.lastName}",
-                          validator: lastNameValidator,
-                        ),
-                        TextFieldWithText(
-                          controller: editCubit.controllers.userNameController,
-                          title: "اسم المستخدم",
-                          hint:
-                              "${myDataCubit.profileResponse!.data!.doc!.username}",
-                          validator: userNameValidator,
-                        ),
-                        TextFieldWithText(
-                          controller: editCubit.controllers.phoneController,
-                          title: "رقم الهاتف",
-                          hint:
-                              "${myDataCubit.profileResponse!.data!.doc!.telephone}",
-                          validator: phoneValidator,
-                        ),
-                        SizedBox(
-                          height: 0.02.sh,
-                        ),
-                        BlocConsumer<EditDataCubit, EditDataStates>(
-                          listener: (context, state) {
-                            if (state is EditDataFailureState) {
-                              showMessage(
-                                  message: state.msg,
-                                  height: 60.h,
-                                  maxLines: 5);
-                            } else if (state is EditNetworkErrorState) {
-                              showMessage(message: "يرجي التحقق من الانترنت");
-                            } else if (state is EditDataSuccessState) {
-                              showMessage(message: "تم التعدبل");
-                              navigateTo(
-                                  page: const NavBarView(), withHistory: false);
-                            }
-                          },
-                          builder: (context, state) {
-                            if (state is EditDataLoadingState) {
-                              return JumpingDotsProgressIndicator(
-                                fontSize: 50.h,
-                                color: ColorManager.secMainColor,
-                              );
-                            }
-                            return CustomElevated(
-                              text: "تعديل",
+                                  child: CachedNetworkImage(
+                                    fit: BoxFit.contain,
+                                    imageUrl:
+                                        "${myDataCubit.profileResponse!.data!.doc!.userPhoto}",
+                                    placeholder: (context, url) =>
+                                        JumpingDotsProgressIndicator(
+                                      fontSize: 20.h,
+                                      color: ColorManager.white,
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Center(
+                                      child:
+                                          Image.asset("assets/images/user.png"),
+                                    ),
+                                  ),
+                                ),
+                                CustomText(
+                                  textAlign: TextAlign.center,
+                                  text:
+                                      "${myDataCubit.profileResponse!.data!.doc!.username}",
+                                  color: ColorManager.secMainColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 25.sp,
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 20.w),
+                            CustomElevated(
+                              text: "تعديل الصورة",
                               press: () {
-                                editCubit.getEditData();
+                                navigateTo(page: const UploadUserPhotoView());
                               },
-                              hSize: 50.h,
+                              wSize: 120.w,
+                              hSize: 30.h,
                               btnColor: ColorManager.secMainColor,
-                              borderRadius: 20.r,
-                              fontSize: 18.sp,
+                              borderRadius: 10.r,
+                              fontSize: 12.sp,
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 0.04.sh,
+                      ),
+                      TextFieldWithText(
+                        controller: editCubit.controllers.firstNameController,
+                        title: "الاسم الاول",
+                        hint:
+                            "${myDataCubit.profileResponse!.data!.doc!.firstName}",
+                        validator: firstNameValidator,
+                      ),
+                      TextFieldWithText(
+                        controller: editCubit.controllers.lastNameController,
+                        title: "الاسم الاخير",
+                        hint:
+                            "${myDataCubit.profileResponse!.data!.doc!.lastName}",
+                        validator: lastNameValidator,
+                      ),
+                      TextFieldWithText(
+                        controller: editCubit.controllers.userNameController,
+                        title: "اسم المستخدم",
+                        hint:
+                            "${myDataCubit.profileResponse!.data!.doc!.username}",
+                        validator: userNameValidator,
+                      ),
+                      TextFieldWithText(
+                        controller: editCubit.controllers.phoneController,
+                        title: "رقم الهاتف",
+                        hint:
+                            "${myDataCubit.profileResponse!.data!.doc!.telephone}",
+                        validator: phoneValidator,
+                      ),
+                      SizedBox(
+                        height: 0.02.sh,
+                      ),
+                      BlocConsumer<EditDataCubit, EditDataStates>(
+                        listener: (context, state) {
+                          if (state is EditDataFailureState) {
+                            showMessage(
+                                message: state.msg, height: 60.h, maxLines: 5);
+                          } else if (state is EditNetworkErrorState) {
+                            showMessage(message: "يرجي التحقق من الانترنت");
+                          } else if (state is EditDataSuccessState) {
+                            showMessage(message: "تم التعديل");
+                            navigateTo(
+                                page: const NavBarView(), withHistory: false);
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is EditDataLoadingState) {
+                            return JumpingDotsProgressIndicator(
+                              fontSize: 50.h,
+                              color: ColorManager.secMainColor,
                             );
-                          },
-                        ),
-                        SizedBox(
-                          height: 0.05.sh,
-                        ),
-                      ],
-                    );
-                  }
-                },
-              ),
+                          }
+                          return CustomElevated(
+                            text: "تعديل",
+                            press: () {
+                              if (editCubit
+                                      .controllers.firstNameController.text !=
+                                  "") {
+                                editCubit.getEditData(
+                                  firstName: {
+                                    "firstName": editCubit
+                                        .controllers.firstNameController.text,
+                                  },
+                                );
+                              } else if (editCubit
+                                      .controllers.lastNameController.text !=
+                                  "") {
+                                editCubit.getEditData(
+                                  firstName: {
+                                    "lastName": editCubit
+                                        .controllers.lastNameController.text,
+                                  },
+                                );
+                              } else if (editCubit
+                                      .controllers.userNameController.text !=
+                                  "") {
+                                editCubit.getEditData(
+                                  firstName: {
+                                    "username": editCubit
+                                        .controllers.userNameController.text,
+                                  },
+                                );
+                              } else if (editCubit
+                                      .controllers.phoneController.text !=
+                                  "") {
+                                editCubit.getEditData(
+                                  firstName: {
+                                    "telephone": editCubit
+                                        .controllers.phoneController.text,
+                                  },
+                                );
+                              }
+                            },
+                            hSize: 50.h,
+                            btnColor: ColorManager.secMainColor,
+                            borderRadius: 20.r,
+                            fontSize: 18.sp,
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 0.05.sh,
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
           ),
         ),
