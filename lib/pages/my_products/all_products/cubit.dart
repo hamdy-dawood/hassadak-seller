@@ -44,11 +44,12 @@ class AllProductsCubit extends Cubit<AllProductsStates> {
         errorMsg = 'Received invalid status code: ${e.response?.statusCode}';
         emit(AllProductsFailedState(msg: errorMsg));
       } else {
-        errorMsg = 'An unexpected error occurred: ${e.message}';
+        errorMsg = 'Error: ${e.message}';
         emit(NetworkErrorState());
       }
     } catch (e) {
       emit(AllProductsFailedState(msg: 'An unknown error occurred: $e'));
+      print('An unknown error occurred: $e');
     }
   }
 }

@@ -42,9 +42,10 @@ class RegisterView extends StatelessWidget {
                       SizedBox(
                         height: 0.01.sh,
                       ),
-                      SvgPicture.asset(
-                        "assets/icons/logo.svg",
+                      SvgIcon(
+                        icon: "assets/icons/logo.svg",
                         height: 60.h,
+                        color: ColorManager.green,
                       ),
                       SizedBox(
                         height: 0.02.sh,

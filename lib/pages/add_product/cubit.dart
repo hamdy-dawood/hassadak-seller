@@ -20,7 +20,10 @@ class AddProductCubit extends Cubit<AddProductStates> {
   String? selectedCatId;
   CreateProductResp? createProductResp;
 
-  Future<void> addProduct() async {
+  Future<void> addProduct({
+    Map<String, dynamic> discount = const {},
+    Map<String, dynamic> discountPerc = const {},
+  }) async {
     if (formKey.currentState!.validate()) {
       if (selectedCatId == null) {
         showMessage(message: "من فضلك اختر الفئة !");
@@ -33,8 +36,8 @@ class AddProductCubit extends Cubit<AddProductStates> {
             "name": controllers.nameController.text,
             "desc": controllers.descController.text,
             "productUrl": "https://mobizil.com/oppo-f3-specs/",
-            "discount": "Success",
-            "discountPerc": controllers.discountPercController.text,
+            ...discount,
+            ...discountPerc,
             "typeId": "64496b688a88f4233a2b3e9e",
             "categoryId": selectedCatId,
             "price": controllers.priceController.text,

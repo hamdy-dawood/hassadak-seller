@@ -202,26 +202,31 @@ class PersonalDataView extends StatelessWidget {
                         height: 0.02.sh,
                       ),
                       TextFieldWithText(
+                        readOnly: true,
                         title: "الاسم الاول",
                         hint: "${cubit.profileResponse!.data!.doc!.firstName}",
                         titleColor: ColorManager.grey,
                       ),
                       TextFieldWithText(
+                        readOnly: true,
                         title: "الاسم الاخير",
                         hint: "${cubit.profileResponse!.data!.doc!.lastName}",
                         titleColor: ColorManager.grey,
                       ),
                       TextFieldWithText(
+                        readOnly: true,
                         title: "اسم المستخدم",
                         hint: "${cubit.profileResponse!.data!.doc!.username}",
                         titleColor: ColorManager.grey,
                       ),
                       TextFieldWithText(
+                        readOnly: true,
                         title: "رقم الهاتف",
                         hint: "${cubit.profileResponse!.data!.doc!.telephone}",
                         titleColor: ColorManager.grey,
                       ),
                       TextFieldWithText(
+                        readOnly: true,
                         title: "البريد الالكترونى",
                         hint: "${cubit.profileResponse!.data!.doc!.email}",
                         titleColor: ColorManager.grey,

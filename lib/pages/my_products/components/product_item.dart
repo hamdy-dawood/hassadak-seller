@@ -158,22 +158,24 @@ class ProductItem extends StatelessWidget {
                           children: [
                             Expanded(
                               child: CustomText(
-                                text: "$price دينار",
+                                text: "$price ج.م",
                                 color: ColorManager.green,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.sp,
                               ),
                             ),
-                            const Spacer(),
+                            SizedBox(width: 5.w),
                             isOffer
                                 ? Expanded(
-                                    child: CustomText(
-                                      text: "$oldPrice دينار",
-                                      color: ColorManager.navGrey,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.sp,
-                                      textDecoration:
-                                          TextDecoration.lineThrough,
+                                    child: FittedBox(
+                                      child: CustomText(
+                                        text: "$oldPrice ج.م",
+                                        color: ColorManager.navGrey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.sp,
+                                        textDecoration:
+                                            TextDecoration.lineThrough,
+                                      ),
                                     ),
                                   )
                                 : const SizedBox(),

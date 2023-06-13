@@ -118,16 +118,19 @@ class _DetailsViewState extends State<DetailsView> {
                         const Spacer(),
                         Expanded(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               CustomText(
-                                text: "${widget.price} دينار",
+                                text: "${widget.price} ج.م",
                                 color: ColorManager.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20.sp,
+                                fontSize: 18.sp,
+                                textAlign: TextAlign.center,
                               ),
+                              SizedBox(height: 5.h),
                               widget.isOffer
                                   ? CustomText(
-                                      text: "${widget.oldPrice} دينار",
+                                      text: "${widget.oldPrice} ج.م",
                                       color: ColorManager.navGrey,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16.sp,

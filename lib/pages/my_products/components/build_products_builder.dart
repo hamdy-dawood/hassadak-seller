@@ -97,6 +97,10 @@ class BuildProductsBuilder extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 final product = allProductsCubit
                                     .allProducts!.data!.doc![index];
+                                double number = double.parse(
+                                    "${product.price! - (product.price! * (product.discountPerc! / 100))}");
+                                String formatOldPrice =
+                                    number.toStringAsFixed(2);
                                 return InkWell(
                                   onTap: () {
                                     navigateTo(
@@ -107,14 +111,13 @@ class BuildProductsBuilder extends StatelessWidget {
                                         productName: "${product.name}",
                                         userName: "${product.uploaderName}",
                                         desc: "${product.desc}",
-                                        phone: "${product.sellerPhone}",
+                                        phone: "${product.user!.whatsapp}",
                                         isOffer: product.discountPerc == 0
                                             ? false
                                             : true,
                                         oldPrice: "${product.price}",
                                         discountPerc: "${product.discountPerc}",
-                                        price:
-                                            "${product.price! - (product.price! * (product.discountPerc! / 100))}",
+                                        price: formatOldPrice,
                                         ratingsAverage:
                                             (product.ratingsAverage)!.toInt(),
                                         ratingsQuantity:
@@ -139,8 +142,7 @@ class BuildProductsBuilder extends StatelessWidget {
                                     userName: "${product.uploaderName}",
                                     userImage: "${product.userPhoto}",
                                     oldPrice: "${product.price}",
-                                    price:
-                                        "${product.price! - (product.price! * (product.discountPerc! / 100))}",
+                                    price: formatOldPrice,
                                   ),
                                 );
                               },

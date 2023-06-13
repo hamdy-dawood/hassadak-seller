@@ -14,6 +14,7 @@ class TextFieldWithText extends StatelessWidget {
     this.validator,
     this.autoValidate = AutovalidateMode.onUserInteraction,
     this.isLastInput = false,
+    this.readOnly = false,
     this.keyboardType = TextInputType.text,
   }) : super(key: key);
   final String title, hint;
@@ -21,7 +22,7 @@ class TextFieldWithText extends StatelessWidget {
   final TextEditingController? controller;
   final FormFieldValidator? validator;
   final AutovalidateMode autoValidate;
-  final bool isLastInput;
+  final bool isLastInput, readOnly;
   final TextInputType keyboardType;
 
   @override
@@ -41,6 +42,7 @@ class TextFieldWithText extends StatelessWidget {
             height: 5.h,
           ),
           TextFormField(
+            readOnly: readOnly,
             controller: controller,
             validator: validator,
             autovalidateMode: autoValidate,

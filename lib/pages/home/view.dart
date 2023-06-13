@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hassadak_seller/components/custom_elevated.dart';
 import 'package:hassadak_seller/components/custom_text_field_expands.dart';
+import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
 import 'package:hassadak_seller/constants/input_validator.dart';
@@ -22,15 +20,8 @@ import 'package:hassadak_seller/pages/upload_product_photo/view.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:shimmer/shimmer.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
-
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
-  File? selectImage;
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +46,11 @@ class _HomeViewState extends State<HomeView> {
                 child: ListView(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 10.h, bottom: 20.h),
-                      child: SvgPicture.asset(
-                        "assets/icons/logo.svg",
+                      padding: EdgeInsets.only(top: 5.h, bottom: 10.h),
+                      child: SvgIcon(
+                        icon: "assets/icons/logo.svg",
                         height: 50.h,
+                        color: ColorManager.green,
                       ),
                     ),
                     BlocBuilder<PersonalDataCubit, PersonalDataStates>(
@@ -173,6 +165,8 @@ class _HomeViewState extends State<HomeView> {
                       validator: (value) {
                         if (value.isEmpty) {
                           return "من فضلك اكتب اسم المنتج !";
+                        } else if (value.length < 5) {
+                          return "يجب الا يقل الاسم عن 5 احرف !";
                         } else {
                           return null;
                         }
@@ -184,7 +178,7 @@ class _HomeViewState extends State<HomeView> {
                           child: TextFieldWithText(
                             controller: cubit.controllers.priceController,
                             title: "سعر المنتج",
-                            hint: "مثال : 200 دينار",
+                            hint: "مثال : 200 ج.م",
                             keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value.isEmpty) {
@@ -206,11 +200,7 @@ class _HomeViewState extends State<HomeView> {
                             hint: "مثال : خصم 10 %",
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.isEmpty) {
-                                return "من فضلك اكتب الخصم !";
-                              } else {
-                                return null;
-                              }
+                              return null;
                             },
                           ),
                         ),
@@ -344,7 +334,20 @@ class _HomeViewState extends State<HomeView> {
                         return CustomElevated(
                           text: "اضافة المنتج",
                           press: () {
-                            cubit.addProduct();
+                            if (cubit.controllers.discountPercController.text !=
+                                "") {
+                              cubit.addProduct(
+                                discount: {
+                                  "discount": "Success",
+                                },
+                                discountPerc: {
+                                  "discountPerc": cubit
+                                      .controllers.discountPercController.text,
+                                },
+                              );
+                            } else {
+                              cubit.addProduct();
+                            }
                           },
                           hSize: 50.h,
                           btnColor: ColorManager.secMainColor,
