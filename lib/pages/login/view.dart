@@ -203,7 +203,9 @@ class _LoginViewState extends State<LoginView>
                                 BlocConsumer<LoginCubit, LoginStates>(
                                   listener: (context, state) {
                                     if (state is LoginFailureState) {
-                                      showMessage(message: "فشل تسجيل الدخول");
+                                      showMessage(
+                                          message:
+                                              "يرجي التأكد من الإيميل وكلمة السر");
                                     } else if (state is NetworkErrorState) {
                                       showMessage(
                                           message: "يرجي التحقق من الانترنت");
@@ -329,7 +331,9 @@ class _LoginViewState extends State<LoginView>
                                 BlocConsumer<LoginCubit, LoginStates>(
                                   listener: (context, state) {
                                     if (state is LoginFailureState) {
-                                      showMessage(message: "فشل تسجيل الدخول");
+                                      showMessage(
+                                          message:
+                                              "يرجي التأكد من الهاتف وكلمة السر");
                                     } else if (state is NetworkErrorState) {
                                       showMessage(
                                           message: "يرجي التحقق من الانترنت");
