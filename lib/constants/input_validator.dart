@@ -84,19 +84,13 @@ String? userNameValidator(value) {
   }
 }
 
-String? whatsappValidator(value) {
-  if (value.isEmpty) {
-    return "من فضلك ادخل رقم الواتساب !";
-  } else {
-    return null;
-  }
-}
-
 String? facebookValidator(value) {
   if (value.isEmpty) {
     return "من فضلك ادخل رابط الفيسبوك !";
-  } else if (!(value.startsWith("www.") && value.endsWith(".com"))) {
-    return "ادخل رابط الفيسبوك صحيح !";
+  } else if (!value.startsWith("www.")) {
+    return "يجب ان يبدأ الرابط ب .www";
+  } else if (!value.endsWith(".com")) {
+    return "يجب ان ينتهي الرابط ب com.";
   } else {
     return null;
   }
@@ -105,8 +99,10 @@ String? facebookValidator(value) {
 String? instaValidator(value) {
   if (value.isEmpty) {
     return "من فضلك ادخل رابط الانستجرام !";
-  } else if (!(value.startsWith("www.") && value.endsWith(".com"))) {
-    return "ادخل رابط الانستجرام صحيح!";
+  } else if (!value.startsWith("www.")) {
+    return "يجب ان يبدأ الرابط ب .www";
+  } else if (!value.endsWith(".com")) {
+    return "يجب ان ينتهي الرابط ب com.";
   } else {
     return null;
   }
@@ -115,8 +111,10 @@ String? instaValidator(value) {
 String? twitterValidator(value) {
   if (value.isEmpty) {
     return "من فضلك ادخل رابط تويتر !";
-  } else if (!(value.startsWith("www.") && value.endsWith(".com"))) {
-    return "ادخل رابط تويتر صحيح !";
+  } else if (!value.startsWith("www.")) {
+    return "يجب ان يبدأ الرابط ب .www";
+  } else if (!value.endsWith(".com")) {
+    return "يجب ان ينتهي الرابط ب com.";
   } else {
     return null;
   }

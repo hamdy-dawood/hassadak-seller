@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,10 +47,10 @@ class HomeView extends StatelessWidget {
                 child: ListView(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 5.h, bottom: 10.h),
+                      padding: EdgeInsets.only(top: 5.h),
                       child: SvgIcon(
                         icon: "assets/icons/logo.svg",
-                        height: 50.h,
+                        height: 80.h,
                         color: ColorManager.green,
                       ),
                     ),
@@ -138,8 +139,11 @@ class HomeView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
-                              child: Divider(
-                                  thickness: 2, color: ColorManager.navGrey)),
+                            child: Divider(
+                              thickness: 2,
+                              color: ColorManager.navGrey,
+                            ),
+                          ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
                             child: CustomText(
@@ -150,8 +154,11 @@ class HomeView extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                              child: Divider(
-                                  thickness: 2, color: ColorManager.navGrey)),
+                            child: Divider(
+                              thickness: 2,
+                              color: ColorManager.navGrey,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -176,6 +183,9 @@ class HomeView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextFieldWithText(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             controller: cubit.controllers.priceController,
                             title: "سعر المنتج",
                             hint: "مثال : 200 ج.م",
@@ -194,13 +204,21 @@ class HomeView extends StatelessWidget {
                         ),
                         Expanded(
                           child: TextFieldWithText(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             controller:
                                 cubit.controllers.discountPercController,
                             title: "الخصم",
                             hint: "مثال : خصم 10 %",
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              return null;
+                              int? numericValue = int.tryParse(value);
+                              if (numericValue != null && numericValue > 90) {
+                                return "اقصي سعر للخصم 99 %";
+                              } else {
+                                return null;
+                              }
                             },
                           ),
                         ),
@@ -311,8 +329,7 @@ class HomeView extends StatelessWidget {
                     BlocConsumer<AddProductCubit, AddProductStates>(
                       listener: (context, state) {
                         if (state is AddProductFailureState) {
-                          showMessage(
-                              message: state.msg, height: 50.h, maxLines: 10);
+                          showMessage(message: "يرجي التأكد من البيانات !");
                         } else if (state is AddProductSuccessState) {
                           showMessage(message: "تمت الإضافة ");
                           cubit.clearController();

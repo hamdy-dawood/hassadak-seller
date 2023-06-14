@@ -8,7 +8,6 @@ import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
 import 'package:hassadak_seller/constants/input_validator.dart';
-import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
 import 'package:hassadak_seller/pages/login/view.dart';
 import 'package:hassadak_seller/pages/register/states.dart';
@@ -158,7 +157,7 @@ class RegisterView extends StatelessWidget {
                             height: 10.h,
                           ),
                         ),
-                        validator: whatsappValidator,
+                        validator: phoneValidator,
                       ),
                       SizedBox(
                         height: 0.02.sh,
@@ -306,11 +305,9 @@ class RegisterView extends StatelessWidget {
                       BlocConsumer<RegisterCubit, RegisterStates>(
                         listener: (context, state) {
                           if (state is RegisterFailureState) {
-                            showMessage(
-                                message: state.msg, height: 80.h, maxLines: 10);
+                            showMessage(message: "يرجي التأكد من البيانات !");
                           } else if (state is RegisterSuccessState) {
                             navigateTo(page: const UploadUserPhotoView());
-                            print(CacheHelper.getToken());
                           } else if (state is NetworkErrorState) {
                             showMessage(message: "يرجي التحقق من الانترنت");
                           }

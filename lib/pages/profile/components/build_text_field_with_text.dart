@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
@@ -16,6 +17,7 @@ class TextFieldWithText extends StatelessWidget {
     this.isLastInput = false,
     this.readOnly = false,
     this.keyboardType = TextInputType.text,
+    this.inputFormatters = const [],
   }) : super(key: key);
   final String title, hint;
   final Color titleColor;
@@ -24,6 +26,7 @@ class TextFieldWithText extends StatelessWidget {
   final AutovalidateMode autoValidate;
   final bool isLastInput, readOnly;
   final TextInputType keyboardType;
+  final List<TextInputFormatter> inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,7 @@ class TextFieldWithText extends StatelessWidget {
             height: 5.h,
           ),
           TextFormField(
+            inputFormatters: inputFormatters,
             readOnly: readOnly,
             controller: controller,
             validator: validator,

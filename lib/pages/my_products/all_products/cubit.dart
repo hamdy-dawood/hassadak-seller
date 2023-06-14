@@ -27,7 +27,6 @@ class AllProductsCubit extends Cubit<AllProductsStates> {
       if (response.data["status"] == "success" && response.statusCode == 200) {
         allProducts = AllProductsResponse.fromJson(response.data);
         emit(AllProductsSuccessState());
-        print(response.data);
       } else {
         emit(AllProductsFailedState(msg: response.data["status"]));
       }
@@ -49,7 +48,6 @@ class AllProductsCubit extends Cubit<AllProductsStates> {
       }
     } catch (e) {
       emit(AllProductsFailedState(msg: 'An unknown error occurred: $e'));
-      print('An unknown error occurred: $e');
     }
   }
 }

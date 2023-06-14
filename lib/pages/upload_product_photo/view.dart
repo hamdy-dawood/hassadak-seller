@@ -289,7 +289,11 @@ class UploadProductPhotoView extends StatelessWidget {
                       return CustomElevated(
                         text: "إضافة",
                         press: () {
-                          cubit.uploadPhoto(id: productID);
+                          if (cubit.myImage == null) {
+                            showMessage(message: "اختر صورة من فضلك !");
+                          } else {
+                            cubit.uploadPhoto(id: productID);
+                          }
                         },
                         hSize: 50.h,
                         btnColor: ColorManager.secMainColor,
