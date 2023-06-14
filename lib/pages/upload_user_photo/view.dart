@@ -43,7 +43,7 @@ class UploadUserPhotoView extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: CustomText(
-                    text: "اصف الصورة الخاصة بك",
+                    text: "اضف الصورة الخاصة بك",
                     color: ColorManager.secMainColor,
                     fontSize: 22.sp,
                     fontWeight: FontWeight.bold,
@@ -158,8 +158,7 @@ class UploadUserPhotoView extends StatelessWidget {
                 BlocConsumer<UploadUserPhotoCubit, UploadUserPhotoStates>(
                   listener: (context, state) {
                     if (state is UploadUserPhotoFailureState) {
-                      showMessage(
-                          message: state.msg, height: 100.h, maxLines: 10);
+                      showMessage(message: "اختر صورة اخري ..");
                     } else if (state is NetworkErrorState) {
                       showMessage(message: "يرجي التحقق من الانترنت !");
                     } else if (state is UploadUserPhotoSuccessState) {

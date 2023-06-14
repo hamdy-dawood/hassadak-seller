@@ -56,7 +56,7 @@ class _SplashViewState extends State<SplashView> {
           children: [
             SvgIcon(
               icon: "assets/icons/logo.svg",
-              height: 100.h,
+              height: 120.h,
               color: ColorManager.green,
             ),
           ],

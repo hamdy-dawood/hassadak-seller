@@ -18,7 +18,11 @@ class EditProductCubit extends Cubit<EditProductStates> {
   final dio = Dio();
   final controllers = EditProductControllers();
 
-  Future<void> editProduct({required String id}) async {
+  Future<void> editProduct({
+    required String id,
+    Map<String, dynamic> discount = const {},
+    Map<String, dynamic> discountPerc = const {},
+  }) async {
     if (formKey.currentState!.validate()) {
       emit(EditProductLoadingState());
       try {
@@ -28,11 +32,8 @@ class EditProductCubit extends Cubit<EditProductStates> {
             await dio.patch("${UrlsStrings.allProductsUrl}/$id", data: {
           "name": controllers.nameController.text,
           "desc": controllers.descController.text,
-          "productUrl": "https://mobizil.com/oppo-f3-specs/",
-          "discount": "Success",
-          "discountPerc": controllers.discountPercController.text,
-          "typeId": "64496b688a88f4233a2b3e9e",
-          "categoryId": "64496b508a88f4233a2b3e97",
+          ...discount,
+          ...discountPerc,
           "price": controllers.priceController.text,
         });
         if (response.data["status"] == "success" &&

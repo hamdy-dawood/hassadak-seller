@@ -48,7 +48,7 @@ class UploadProductPhotoView extends StatelessWidget {
                   Align(
                     alignment: Alignment.center,
                     child: CustomText(
-                      text: "اصف صورة للمنتج ",
+                      text: "اضف صورة للمنتج ",
                       color: ColorManager.secMainColor,
                       fontSize: 22.sp,
                       fontWeight: FontWeight.bold,

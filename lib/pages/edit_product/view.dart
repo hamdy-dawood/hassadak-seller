@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -98,6 +99,8 @@ class _EditProductViewState extends State<EditProductView> {
                       validator: (value) {
                         if (value.isEmpty) {
                           return "من فضلك اكتب اسم المنتج !";
+                        } else if (value.length < 5) {
+                          return "يجب الا يقل الاسم عن 5 احرف !";
                         } else {
                           return null;
                         }
@@ -107,6 +110,9 @@ class _EditProductViewState extends State<EditProductView> {
                       children: [
                         Expanded(
                           child: TextFieldWithText(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             controller: cubit.controllers.priceController,
                             title: "سعر المنتج",
                             hint: widget.price,
@@ -125,14 +131,18 @@ class _EditProductViewState extends State<EditProductView> {
                         ),
                         Expanded(
                           child: TextFieldWithText(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             controller:
                                 cubit.controllers.discountPercController,
                             title: "الخصم",
                             hint: widget.discountPerc,
                             keyboardType: TextInputType.number,
                             validator: (value) {
-                              if (value.isEmpty) {
-                                return "من فضلك اكتب الخصم !";
+                              int? numericValue = int.tryParse(value);
+                              if (numericValue != null && numericValue > 90) {
+                                return "اقصي سعر للخصم 90 %";
                               } else {
                                 return null;
                               }
@@ -154,16 +164,13 @@ class _EditProductViewState extends State<EditProductView> {
                     BlocConsumer<EditProductCubit, EditProductStates>(
                       listener: (context, state) {
                         if (state is EditProductFailureState) {
-                          // showMessage(message: "فشل تعديل المنتج");
-                          showMessage(
-                              message: state.msg, height: 80.h, maxLines: 10);
+                          showMessage(message: "فشل تعديل المنتج");
                         } else if (state is EditNetworkErrorState) {
                           showMessage(message: "يرجي التحقق من الانترنت !");
                         } else if (state is EditProductSuccessState) {
                           showMessage(message: "تم التعديل ");
                           navigateTo(
                               page: const NavBarView(), withHistory: false);
-                          // cubit.clearController();
                         }
                       },
                       builder: (context, state) {
@@ -176,7 +183,21 @@ class _EditProductViewState extends State<EditProductView> {
                         return CustomElevated(
                           text: "تعديل",
                           press: () {
-                            cubit.editProduct(id: widget.id);
+                            if (cubit.controllers.discountPercController.text !=
+                                "") {
+                              cubit.editProduct(
+                                id: widget.id,
+                                discount: {
+                                  "discount": "Success",
+                                },
+                                discountPerc: {
+                                  "discountPerc": cubit
+                                      .controllers.discountPercController.text,
+                                },
+                              );
+                            } else {
+                              cubit.editProduct(id: widget.id);
+                            }
                           },
                           hSize: 50.h,
                           btnColor: ColorManager.secMainColor,
