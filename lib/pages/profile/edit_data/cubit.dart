@@ -33,6 +33,10 @@ class EditDataCubit extends Cubit<EditDataStates> {
       });
       if (response.data["status"] == "success" && response.statusCode == 200) {
         emit(EditDataSuccessState());
+        CacheHelper.saveFirstName(
+            "${response.data["data"]["user"]["firstName"]}");
+        CacheHelper.saveLastName(
+            "${response.data["data"]["user"]["lastName"]}");
       } else {
         emit(EditDataFailureState(msg: response.data["status"]));
       }

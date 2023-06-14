@@ -35,6 +35,30 @@ class CacheHelper {
     return prefs.getString("id") ?? "";
   }
 
+  static Future<bool> saveFirstName(String firstName) async {
+    return await prefs.setString("firstName", firstName);
+  }
+
+  static String getFirstName() {
+    return prefs.getString("firstName") ?? "";
+  }
+
+  static Future<bool> saveLastName(String lastName) async {
+    return await prefs.setString("lastName", lastName);
+  }
+
+  static String getLastName() {
+    return prefs.getString("lastName") ?? "";
+  }
+
+  static Future<bool> saveUserPhoto(String userPhoto) async {
+    return await prefs.setString("userPhoto", userPhoto);
+  }
+
+  static String getUserPhoto() {
+    return prefs.getString("userPhoto") ?? "";
+  }
+
   static Future<bool> removeId() {
     return prefs.remove("id");
   }

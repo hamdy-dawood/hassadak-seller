@@ -46,6 +46,10 @@ class RegisterCubit extends Cubit<RegisterStates> {
           registerResponse = RegisterResponse.fromJson(response.data);
           CacheHelper.saveToken("${response.data["token"]}");
           CacheHelper.saveId("${response.data["data"]["user"]["_id"]}");
+          CacheHelper.saveFirstName(
+              "${response.data["data"]["user"]["firstName"]}");
+          CacheHelper.saveLastName(
+              "${response.data["data"]["user"]["lastName"]}");
           emit(RegisterSuccessState());
         } else {
           emit(RegisterFailureState(msg: response.data["status"]));

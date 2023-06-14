@@ -10,13 +10,12 @@ import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
 import 'package:hassadak_seller/constants/input_validator.dart';
+import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
 import 'package:hassadak_seller/pages/add_product/cubit.dart';
 import 'package:hassadak_seller/pages/add_product/states.dart';
 import 'package:hassadak_seller/pages/my_products/categories/cubit.dart';
 import 'package:hassadak_seller/pages/profile/components/build_text_field_with_text.dart';
-import 'package:hassadak_seller/pages/profile/personal_data/cubit.dart';
-import 'package:hassadak_seller/pages/profile/personal_data/states.dart';
 import 'package:hassadak_seller/pages/upload_product_photo/view.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:shimmer/shimmer.dart';
@@ -30,9 +29,7 @@ class HomeView extends StatelessWidget {
       create: (context) => AddProductCubit(),
       child: Builder(builder: (context) {
         final cubit = AddProductCubit.get(context);
-        final personalCubit = PersonalDataCubit.get(context);
         final categoriesCubit = AllCategoriesCubit.get(context);
-        personalCubit.getPersonalData();
         categoriesCubit.getAllCategories();
 
         return Scaffold(
@@ -54,84 +51,41 @@ class HomeView extends StatelessWidget {
                         color: ColorManager.green,
                       ),
                     ),
-                    BlocBuilder<PersonalDataCubit, PersonalDataStates>(
-                      builder: (context, state) {
-                        if (state is PersonalDataFailureState) {
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: 5.h),
-                            child: CustomText(
-                              text: "فشل",
-                              color: ColorManager.mainColor,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          );
-                        } else if (state is PersonalDataSuccessState) {
-                          return Row(
-                            children: [
-                              ClipOval(
-                                child: CircleAvatar(
-                                  radius: 22.r,
-                                  backgroundColor: ColorManager.secMainColor,
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.contain,
-                                    imageUrl:
-                                        "${personalCubit.profileResponse!.data!.doc!.userPhoto}",
-                                    placeholder: (context, url) =>
-                                        JumpingDotsProgressIndicator(
-                                      fontSize: 20.h,
-                                      color: ColorManager.secMainColor,
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        Center(
-                                      child: Image.asset(
-                                        "assets/images/user.png",
-                                      ),
-                                    ),
-                                  ),
+                    Row(
+                      children: [
+                        ClipOval(
+                          child: CircleAvatar(
+                            radius: 22.r,
+                            backgroundColor: ColorManager.secMainColor,
+                            child: CachedNetworkImage(
+                              fit: BoxFit.contain,
+                              imageUrl: CacheHelper.getUserPhoto(),
+                              placeholder: (context, url) =>
+                                  JumpingDotsProgressIndicator(
+                                fontSize: 20.h,
+                                color: ColorManager.secMainColor,
+                              ),
+                              errorWidget: (context, url, error) => Center(
+                                child: Image.asset(
+                                  "assets/images/user.png",
                                 ),
                               ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Expanded(
-                                child: CustomText(
-                                  text:
-                                      "${personalCubit.profileResponse!.data!.doc!.firstName} ${personalCubit.profileResponse!.data!.doc!.lastName}",
-                                  color: ColorManager.mainColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.sp,
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-                        return SizedBox(
-                          width: 1.sw,
-                          child: Shimmer.fromColors(
-                            baseColor: ColorManager.shimmerBaseColor,
-                            highlightColor: ColorManager.shimmerHighlightColor,
-                            direction: ShimmerDirection.rtl,
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 22.r,
-                                  backgroundColor:
-                                      ColorManager.shimmerBaseColor,
-                                ),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Container(
-                                  height: 18.h,
-                                  width: 200.w,
-                                  color: ColorManager.shimmerBaseColor,
-                                ),
-                              ],
                             ),
                           ),
-                        );
-                      },
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        Expanded(
+                          child: CustomText(
+                            text:
+                                "${CacheHelper.getFirstName()} ${CacheHelper.getLastName()}",
+                            color: ColorManager.mainColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -215,7 +169,7 @@ class HomeView extends StatelessWidget {
                             validator: (value) {
                               int? numericValue = int.tryParse(value);
                               if (numericValue != null && numericValue > 90) {
-                                return "اقصي سعر للخصم 99 %";
+                                return "اقصي سعر للخصم 90 %";
                               } else {
                                 return null;
                               }

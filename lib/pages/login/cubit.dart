@@ -33,6 +33,9 @@ class LoginCubit extends Cubit<LoginStates> {
           loginResponse = LoginResponse.fromJson(emailResponse.data);
           CacheHelper.saveToken("${emailResponse.data["token"]}");
           CacheHelper.saveId("${loginResponse!.data!.user!.id}");
+          CacheHelper.saveFirstName("${loginResponse!.data!.user!.firstName}");
+          CacheHelper.saveLastName("${loginResponse!.data!.user!.lastName}");
+          CacheHelper.saveUserPhoto("${loginResponse!.data!.user!.userPhoto}");
           emit(LoginSuccessState());
         } else {
           emit(LoginFailureState(msg: emailResponse.data["status"]));

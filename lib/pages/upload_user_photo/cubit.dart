@@ -33,8 +33,9 @@ class UploadUserPhotoCubit extends Cubit<UploadUserPhotoStates> {
           }));
       if (response.data["status"] == "success" && response.statusCode == 201) {
         uploadUserPhotoRepo = UploadUserPhotoRepo.fromJson(response.data);
-
         emit(UploadUserPhotoSuccessState());
+        CacheHelper.saveUserPhoto(
+            "${response.data["updatedUser"]["userPhoto"]}");
       } else {
         emit(UploadUserPhotoFailureState(msg: response.data["status"]));
       }

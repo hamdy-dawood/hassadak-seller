@@ -146,42 +146,46 @@ class PersonalDataView extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 8.h),
                         child: Row(
                           children: [
-                            Column(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(vertical: 8.h),
-                                  height: 120.h,
-                                  width: 120.h,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    color: ColorManager.secMainColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.contain,
-                                    imageUrl:
-                                        "${cubit.profileResponse!.data!.doc!.userPhoto}",
-                                    placeholder: (context, url) =>
-                                        JumpingDotsProgressIndicator(
-                                      fontSize: 20.h,
-                                      color: ColorManager.white,
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(vertical: 8.h),
+                                    height: 120.h,
+                                    width: 120.h,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      color: ColorManager.secMainColor,
+                                      shape: BoxShape.circle,
                                     ),
-                                    errorWidget: (context, url, error) =>
-                                        Center(
-                                      child:
-                                          Image.asset("assets/images/user.png"),
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.contain,
+                                      imageUrl:
+                                          "${cubit.profileResponse!.data!.doc!.userPhoto}",
+                                      placeholder: (context, url) =>
+                                          JumpingDotsProgressIndicator(
+                                        fontSize: 20.h,
+                                        color: ColorManager.white,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Center(
+                                        child: Image.asset(
+                                            "assets/images/user.png"),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                CustomText(
-                                  textAlign: TextAlign.center,
-                                  text:
-                                      "${cubit.profileResponse!.data!.doc!.username}",
-                                  color: ColorManager.secMainColor,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 25.sp,
-                                ),
-                              ],
+                                  FittedBox(
+                                    child: CustomText(
+                                      textAlign: TextAlign.center,
+                                      text:
+                                          "${cubit.profileResponse!.data!.doc!.username}",
+                                      color: ColorManager.secMainColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 25.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(width: 20.w),
                             CustomElevated(

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hassadak_seller/components/custom_elevated.dart';
@@ -8,6 +9,7 @@ import 'package:hassadak_seller/components/svg_icons.dart';
 import 'package:hassadak_seller/constants/color_manager.dart';
 import 'package:hassadak_seller/constants/custom_text.dart';
 import 'package:hassadak_seller/constants/input_validator.dart';
+import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/core/snack_and_navigate.dart';
 import 'package:hassadak_seller/pages/bottom_nav_bar/view.dart';
 import 'package:hassadak_seller/pages/profile/components/build_text_field_with_text.dart';
@@ -148,42 +150,47 @@ class EditDataView extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 8.h),
                         child: Row(
                           children: [
-                            Column(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(vertical: 8.h),
-                                  height: 120.h,
-                                  width: 120.h,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    color: ColorManager.secMainColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.contain,
-                                    imageUrl:
-                                        "${myDataCubit.profileResponse!.data!.doc!.userPhoto}",
-                                    placeholder: (context, url) =>
-                                        JumpingDotsProgressIndicator(
-                                      fontSize: 20.h,
-                                      color: ColorManager.white,
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(vertical: 8.h),
+                                    height: 120.h,
+                                    width: 120.h,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      color: ColorManager.secMainColor,
+                                      shape: BoxShape.circle,
                                     ),
-                                    errorWidget: (context, url, error) =>
-                                        Center(
-                                      child:
-                                          Image.asset("assets/images/user.png"),
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.contain,
+                                      imageUrl:
+                                          "${myDataCubit.profileResponse!.data!.doc!.userPhoto}",
+                                      placeholder: (context, url) =>
+                                          JumpingDotsProgressIndicator(
+                                        fontSize: 20.h,
+                                        color: ColorManager.white,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Center(
+                                        child: Image.asset(
+                                          "assets/images/user.png",
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                CustomText(
-                                  textAlign: TextAlign.center,
-                                  text:
-                                      "${myDataCubit.profileResponse!.data!.doc!.username}",
-                                  color: ColorManager.secMainColor,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 25.sp,
-                                ),
-                              ],
+                                  FittedBox(
+                                    child: CustomText(
+                                      textAlign: TextAlign.center,
+                                      text:
+                                          "${myDataCubit.profileResponse!.data!.doc!.username}",
+                                      color: ColorManager.secMainColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 25.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(width: 20.w),
                             CustomElevated(
@@ -225,6 +232,10 @@ class EditDataView extends StatelessWidget {
                         validator: userNameValidator,
                       ),
                       TextFieldWithText(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        keyboardType: TextInputType.number,
                         controller: editCubit.controllers.phoneController,
                         title: "رقم الهاتف",
                         hint:
@@ -245,6 +256,10 @@ class EditDataView extends StatelessWidget {
                             showMessage(message: "تم التعديل");
                             navigateTo(
                                 page: const NavBarView(), withHistory: false);
+                            editCubit.controllers.firstNameController.clear();
+                            editCubit.controllers.lastNameController.clear();
+                            editCubit.controllers.userNameController.clear();
+                            editCubit.controllers.phoneController.clear();
                           }
                         },
                         builder: (context, state) {
@@ -266,29 +281,35 @@ class EditDataView extends StatelessWidget {
                                         .controllers.firstNameController.text,
                                   },
                                 );
-                              } else if (editCubit
+                                CacheHelper.saveFirstName(editCubit
+                                    .controllers.firstNameController.text);
+                              }
+                              if (editCubit
                                       .controllers.lastNameController.text !=
                                   "") {
                                 editCubit.getEditData(
-                                  firstName: {
+                                  lastName: {
                                     "lastName": editCubit
                                         .controllers.lastNameController.text,
                                   },
                                 );
-                              } else if (editCubit
+                                CacheHelper.saveLastName(editCubit
+                                    .controllers.lastNameController.text);
+                              }
+                              if (editCubit
                                       .controllers.userNameController.text !=
                                   "") {
                                 editCubit.getEditData(
-                                  firstName: {
+                                  username: {
                                     "username": editCubit
                                         .controllers.userNameController.text,
                                   },
                                 );
-                              } else if (editCubit
-                                      .controllers.phoneController.text !=
+                              }
+                              if (editCubit.controllers.phoneController.text !=
                                   "") {
                                 editCubit.getEditData(
-                                  firstName: {
+                                  telephone: {
                                     "telephone": editCubit
                                         .controllers.phoneController.text,
                                   },
