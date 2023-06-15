@@ -19,11 +19,13 @@ class RegisterCubit extends Cubit<RegisterStates> {
   bool securePass = true;
   bool secureConfPass = true;
   RegisterResponse? registerResponse;
+  bool showVisibilityIcon = true;
 
   final controllers = RegisterControllers();
 
   Future<void> register() async {
     if (formKey.currentState!.validate()) {
+      showVisibilityIcon = false;
       emit(RegisterLoadingState());
       try {
         final response = await Dio().post(UrlsStrings.registerUrl, data: {
@@ -51,28 +53,35 @@ class RegisterCubit extends Cubit<RegisterStates> {
           CacheHelper.saveLastName(
               "${response.data["data"]["user"]["lastName"]}");
           emit(RegisterSuccessState());
+          showVisibilityIcon = true;
         } else {
           emit(RegisterFailureState(msg: response.data["status"]));
+          showVisibilityIcon = true;
         }
       } on DioError catch (e) {
         String errorMsg;
         if (e.type == DioErrorType.cancel) {
           errorMsg = 'Request was cancelled';
           emit(RegisterFailureState(msg: errorMsg));
+          showVisibilityIcon = true;
         } else if (e.type == DioErrorType.receiveTimeout ||
             e.type == DioErrorType.sendTimeout) {
           errorMsg = 'Connection timed out';
           emit(NetworkErrorState());
+          showVisibilityIcon = true;
         } else if (e.type == DioErrorType.badResponse) {
           final responseData = json.decode(e.response?.data);
           errorMsg = responseData["message"];
           emit(RegisterFailureState(msg: errorMsg));
+          showVisibilityIcon = true;
         } else {
           errorMsg = 'An unexpected error : ${e.error}';
           emit(NetworkErrorState());
+          showVisibilityIcon = true;
         }
       } catch (e) {
         emit(RegisterFailureState(msg: 'An unknown error: $e'));
+        showVisibilityIcon = true;
       }
     }
   }

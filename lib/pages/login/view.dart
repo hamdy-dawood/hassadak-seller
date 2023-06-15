@@ -170,12 +170,14 @@ class _LoginViewState extends State<LoginView>
                                         onPressed: () {
                                           cubit.changeVisibility();
                                         },
-                                        icon: Icon(
-                                          cubit.isObscure
-                                              ? Icons.visibility_off_outlined
-                                              : Icons.visibility_outlined,
-                                        ),
-                                        color: ColorManager.grey,
+                                        icon: cubit.showVisibilityIcon
+                                            ? Icon(
+                                                cubit.isObscure
+                                                    ? Icons
+                                                        .visibility_off_outlined
+                                                    : Icons.visibility_outlined,
+                                              )
+                                            : const SizedBox(),
                                       ),
                                       obscureText: cubit.isObscure,
                                       isLastInput: true,
@@ -298,12 +300,14 @@ class _LoginViewState extends State<LoginView>
                                         onPressed: () {
                                           cubit.changeVisibility();
                                         },
-                                        icon: Icon(
-                                          cubit.isObscure
-                                              ? Icons.visibility_off_outlined
-                                              : Icons.visibility_outlined,
-                                        ),
-                                        color: ColorManager.grey,
+                                        icon: cubit.showVisibilityIcon
+                                            ? Icon(
+                                                cubit.isObscure
+                                                    ? Icons
+                                                        .visibility_off_outlined
+                                                    : Icons.visibility_outlined,
+                                              )
+                                            : const SizedBox(),
                                       ),
                                       obscureText: cubit.isObscure,
                                       isLastInput: true,
