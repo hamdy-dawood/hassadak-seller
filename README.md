@@ -1,16 +1,10 @@
 # hassadak_seller
+Sellers Copy : The seller add, edit, delete products.
 
-A new Flutter project.
+## Links
+* [Linkedin post](https://hamdy-dawood.github.io/quran_web/#/](https://www.linkedin.com/feed/update/urn:li:activity:7074430468296777728/))
 
-## Getting Started
+## Preview:
 
-This project is a starting point for a Flutter application.
+https://github.com/hamdy-dawood/hassadak-seller/assets/77101158/31fae27a-656e-40f5-bc90-4a921546f235
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
