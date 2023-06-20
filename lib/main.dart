@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/cache_helper.dart';
 import 'core/snack_and_navigate.dart';
+import 'pages/bottom_nav_bar/view.dart';
 import 'pages/delete_product/cubit.dart';
+import 'pages/login/view.dart';
 import 'pages/my_products/all_products/cubit.dart';
 import 'pages/my_products/categories/cubit.dart';
+import 'pages/on_boarding/view.dart';
 import 'pages/profile/edit_data/cubit.dart';
 import 'pages/profile/personal_data/cubit.dart';
-import 'pages/splash/view.dart';
 import 'pages/upload_user_photo/cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await CacheHelper.init();
+  await Future.delayed(const Duration(seconds: 3), () {
+    FlutterNativeSplash.remove();
+  });
   runApp(const MyApp());
 }
 
@@ -24,6 +32,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isFirstTime = CacheHelper.getIfFirstTime();
+    String token = CacheHelper.getToken();
     return ScreenUtilInit(
       minTextAdapt: true,
       splitScreenMode: true,
@@ -57,7 +67,11 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      child: const SplashView(),
+      child: isFirstTime
+          ? const OnBoardingView()
+          : token.isEmpty
+              ? const LoginView()
+              : const NavBarView(),
     );
   }
 }

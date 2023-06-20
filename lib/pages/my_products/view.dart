@@ -6,41 +6,9 @@ import 'package:hassadak_seller/core/cache_helper.dart';
 import 'package:hassadak_seller/pages/my_products/components/build_products_builder.dart';
 
 import 'all_products/cubit.dart';
-import 'categories/cubit.dart';
 
-class MyProductsView extends StatefulWidget {
+class MyProductsView extends StatelessWidget {
   const MyProductsView({Key? key}) : super(key: key);
-
-  @override
-  State<MyProductsView> createState() => _MyProductsViewState();
-}
-
-class _MyProductsViewState extends State<MyProductsView>
-    with TickerProviderStateMixin {
-  TabController? tabController;
-  int currentIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(vsync: this, length: 0);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await AllCategoriesCubit.get(context).getAllCategories();
-      setState(() {
-        tabController = TabController(
-            vsync: this, length: AllCategoriesCubit.get(context).length!);
-      });
-      tabController!.addListener(() {
-        currentIndex = tabController!.index;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    tabController!.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
