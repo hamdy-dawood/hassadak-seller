@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hamdy.hassadak_seller.hassadak_seller">
+    package="com.hamdy.secItDevelopers.hassadak_seller">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="حصادك للبائع"

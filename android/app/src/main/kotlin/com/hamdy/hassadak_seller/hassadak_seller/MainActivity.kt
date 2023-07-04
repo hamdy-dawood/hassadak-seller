@@ -1,4 +1,4 @@
-package com.hamdy.hassadak_seller.hassadak_seller
+package com.hamdy.secItDevelopers.hassadak_seller
 
 import io.flutter.embedding.android.FlutterActivity
 
